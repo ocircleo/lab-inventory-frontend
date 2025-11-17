@@ -12,11 +12,11 @@ const NavbarCompo = ({ data }) => {
     const toggleNav = () => {
         setShow(!show);
     };
-    const { fetchUserData } = useContext(AuthContext)
+    const { fetchUserData, user } = useContext(AuthContext)
     useEffect(() => {
         if (data == undefined) return;
         fetchUserData(data);
-    }, []);
+    }, [user]);
     return (
         <div className='bg-base-100'>
             <div className="navbar  h-20  w-full lg:w-[90%] mx-auto">
@@ -37,7 +37,7 @@ const NavbarCompo = ({ data }) => {
                 <div className="navbar-end">
                     <Search />
                     <ThemeButton />
-                    <Profile />
+                    <Profile user={user} />
 
                     {/* small screen dropdown */}
                     <div className="lg:hidden">
@@ -48,7 +48,7 @@ const NavbarCompo = ({ data }) => {
                         <div
                             id='dropdown'
                             className={`bg-base-300  z-50  fixed ${show ? "left-0" : "left-full"} duration-100 top-0 shadow w-full h-screen`}>
-                            <Dropdown toggleNav={toggleNav} />
+                            <Dropdown toggleNav={toggleNav} user={user} />
 
                         </div>
                     </div>
@@ -62,19 +62,18 @@ const NavbarCompo = ({ data }) => {
 export default NavbarCompo;
 
 
-function Profile() {
-    const { user } = useContext(AuthContext)
-
+function Profile({ user }) {
     return (<>
         <div className="hidden lg:dropdown dropdown-end">
             {/* if user is not logged in then show this dropdown */}
             {user?.email ? <>
                 {/* If User is  logged in then show this dropdown */}
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full">
-                        <img
-                            alt="Tailwind CSS Navbar component"
-                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold pt-1">
+                        <p>
+                            {user?.name ? user?.name.charAt(0).toUpperCase() : "U"}
+
+                        </p>
                     </div>
                 </div>
                 <ul
@@ -146,7 +145,7 @@ function Search() {
     </>)
 }
 
-function Dropdown({ toggleNav }) {
+function Dropdown({ toggleNav, user }) {
     return (<>
         <div className='navbar justify-between w-full h-20  items-center'>
             <a className="btn btn-ghost text-xl"><img src={"/images/logos/logo.png"} alt="alt" className='h-full' /></a>
@@ -159,23 +158,21 @@ function Dropdown({ toggleNav }) {
             <li><a>Bootcamp</a></li>
             <li><a>Testimonials</a></li>
             <li>
-                <DropdownSubMenuAccount />
+                <DropdownSubMenuAccount user={user} />
             </li>
         </ul>
     </>)
 }
-function DropdownSubMenuAccount() {
-    const { user, } = useContext(AuthContext)
+function DropdownSubMenuAccount({ user }) {
+
     return (<>
         {
             user?.email ? <>
                 {/* If User is logged in then show this dropdown */}
                 <details open>
                     <summary className='bg-base-300'>
-                        <div className="w-8 h-8 rounded-full">
-                            <img className='rounded-full'
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">
+                            {user?.name ? user?.name.charAt(0).toUpperCase() : "U"}
                         </div>
                         Account
                     </summary>

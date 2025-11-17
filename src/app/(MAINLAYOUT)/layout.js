@@ -5,7 +5,6 @@ import Navbar from "../components/navbar/Navbar";
 const MainLayout = async ({ children }) => {
   const cookie = await cookies();
   let access_token =  cookie.get("access_token")?.value;
-  console.log(cookie.get("access_token")?.value == undefined);
   // console.log("Request: ", data);
   //Theme changer event Handler DARK or LIGHT
 

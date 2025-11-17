@@ -15,8 +15,13 @@ export const RegisterForm = () => {
   const router = useRouter();
   const redirect = () => {
     let redirect_url = queryParams("redirect");
-    if (redirect_url) router.replace(redirect_url);
-    else router.replace("/");
+    if (window) {
+      if (redirect_url) window.location.href = redirect_url;
+      else window.location.href = "/";
+    } else {
+      if (redirect_url) redirect_url;
+      else router.replace("/");
+    }
   };
   let loading = false;
   const submitHandler = async (e) => {
@@ -59,7 +64,8 @@ export const RegisterForm = () => {
       if (!data.success) return Alert("error", data.message);
       setUser(data.data);
     } catch (error) {
-      if (error.name === "AbortError") Alert("error", "Request timed out, unable to verify request");
+      if (error.name === "AbortError")
+        Alert("error", "Request timed out, unable to verify request");
       else Alert("error", "Operation Failed");
 
       loading = false;

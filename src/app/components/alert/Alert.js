@@ -1,4 +1,4 @@
-const Alert = (type, message, autoClose = 5000) => {
+const Alert = (errorType, message, autoClose = 5000) => {
   let container = document.getElementById("alert-container");
 
   let alertContainer = document.createElement("div");
@@ -6,7 +6,7 @@ const Alert = (type, message, autoClose = 5000) => {
   let button = document.createElement("button");
 
   alertContainer.className += ` border border-gray-300 bg-base-100   px-4 py-3 rounded-md font-semibold border-b-4 duration-100 pointer-events-auto ${
-    type == "error" ? "border-b-red-500" : "border-b-blue-500"
+    errorType == "error" ? "border-b-red-500" : "border-b-blue-500"
   } flex self-start  gap-6 alertAnimation`;
   button.className += "cursor-pointer bg-white rounded px-1";
   let img = document.createElement("img");

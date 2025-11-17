@@ -5,7 +5,7 @@
  * @param callback
  *
  */
-const Popup = (attributes, arguments, callback) => {
+const Popup = (attributes, args, callback) => {
  
   
   let container = document.getElementById("popup-container");

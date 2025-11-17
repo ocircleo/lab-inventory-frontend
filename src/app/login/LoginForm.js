@@ -17,8 +17,13 @@ const LoginForm = () => {
   const router = useRouter();
   const redirect = () => {
     let redirect_url = queryParams("redirect");
-    if (redirect_url) router.replace(redirect_url);
-    else router.replace("/");
+    if (window) {
+      if (redirect_url) window.location.href = redirect_url;
+      else window.location.href = "/";
+    } else {
+      if (redirect_url) redirect_url;
+      else router.replace("/");
+    }
   };
   let loading = false;
   const submitHandler = async (e) => {
@@ -55,9 +60,11 @@ const LoginForm = () => {
       loading = false;
       submitButton.disabled = false;
       submitButton.innerText = "Login";
-
-      if (!data.success) return Alert("error", data.message);
-      setUser(data.data);
+      if (data.success) {
+        setUser(data.data);
+      } else {
+        Alert("error", data.message);
+      }
     } catch (error) {
       if (error.name === "AbortError") Alert("error", "Request timed out");
       else Alert("error", error + API);

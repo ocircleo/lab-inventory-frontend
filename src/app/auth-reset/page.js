@@ -15,8 +15,7 @@ const Page = () => {
       credentials: "include",
     });
     const data = await res.json();
-    if (data.success) router.push("/login");
-    else Alert("Error", data.message);
+    router.push("/");
   };
   return (
     <div className="bg-white text-gray-800 font-semibold flex items-center justify-center text-center flex-col w-full min-h-screen">
