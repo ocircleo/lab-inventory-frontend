@@ -263,3 +263,16 @@
   width: 15px;
   height: 0px;
 }
+.scroll-xs::-webkit-scrollbar-track {
+  border-radius: 0px;
+  background-color: white;
+}
+.scroll-xs::-webkit-scrollbar-thumb {
+  background-color: rgb(226, 217, 217);
+  border-radius: 0px;
+  border: 0px solid white;
+}
+.scroll-xs::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}

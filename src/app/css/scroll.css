@@ -1,0 +1,17 @@
+.small-scrollbar {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgb(182, 182, 182) transparent; /* Firefox */
+    /* Makes scrollbar background transparent */
+    /* Chrome, Edge, Safari */
+}
+.small-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.small-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+.small-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}

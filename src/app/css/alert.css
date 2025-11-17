@@ -1,0 +1,28 @@
+.alertAnimation {
+  animation: alertSlideAnimation 200ms forwards;
+}
+
+@keyframes alertSlideAnimation {
+  0% {
+    transform: translateX(-30px);
+  }
+  100% {
+    transform: translateX(20px);
+  }
+}
+.alertAnimationEnd {
+  animation: alertSlideAnimationEnd 200ms forwards;
+}
+
+@keyframes alertSlideAnimationEnd {
+  0% {
+    transform: translateX(0);
+  }
+  99% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+}

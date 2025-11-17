@@ -1,0 +1,151 @@
+"use client";
+import { useRouter } from "next/navigation";
+import queryParams from "../components/queryParams/queryParams";
+import API from "../components/API";
+import { TfiEmail } from "react-icons/tfi";
+import { TbLockPassword } from "react-icons/tb";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import Alert from "../components/alert/Alert";
+import { AuthContext } from "../state/AuthProvider";
+import fetchWithTimeOut from "../components/fetchwithtimeout/fetchWithTimeOut";
+
+const LoginForm = () => {
+  const { user, setUser } = useContext(AuthContext);
+  const [show, setShow] = useState(false);
+  const router = useRouter();
+  const redirect = () => {
+    let redirect_url = queryParams("redirect");
+    if (redirect_url) router.replace(redirect_url);
+    else router.replace("/");
+  };
+  let loading = false;
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+
+    let form = e.target;
+    let email_address = form.email.value;
+    let password = form.password.value;
+    let remember = form.remember.checked;
+    let submitButton = form.submitButton;
+    submitButton.disabled = true;
+    submitButton.innerText = "Logging in...";
+    loading = true;
+
+    try {
+      const res = await fetchWithTimeOut(
+        `${API}/auth/login`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email_address,
+            password,
+            remember,
+          }),
+        },
+        12000
+      );
+      const data = await res.json();
+      loading = false;
+      submitButton.disabled = false;
+      submitButton.innerText = "Login";
+
+      if (!data.success) return Alert("error", data.message);
+      setUser(data.data);
+    } catch (error) {
+      if (error.name === "AbortError") Alert("error", "Request timed out");
+      else Alert("error", error + API);
+
+      loading = false;
+      submitButton.disabled = false;
+      submitButton.innerText = "Login";
+    }
+  };
+  useEffect(() => {
+    if (user?.email_address) redirect();
+  }, [user]);
+
+  return (
+    <>
+      <form
+        onSubmit={submitHandler}
+        className="flex flex-col gap-4 w-full sm:w-96  mt-8"
+      >
+        <fieldset className="join w-full">
+          <button
+            role="button"
+            className="btn  bg-base-300 join-item pointer-events-none"
+          >
+            <TfiEmail className="text-xl  text-light-gray" />
+          </button>
+          <input
+            name="email"
+            type="email"
+            required
+            className=" join-item border-0 bg-base-300 placeholder:text-light-gray  focus:outline-0 w-full"
+            placeholder="Email"
+          />
+        </fieldset>
+        <fieldset className="join relative">
+          <button
+            type="button"
+            className="btn pointer-events-none  bg-base-300 join-item "
+          >
+            <TbLockPassword className="text-xl  text-light-gray" />
+          </button>
+          <input
+            name="password"
+            type={show ? "text" : "password"}
+            minLength={6}
+            required
+            className="input join-item border-0 bg-base-300 placeholder:text-light-gray focus:outline-0 w-full"
+            placeholder="Password"
+          />
+          <button
+            type="button"
+            onClick={() => setShow(!show)}
+            className="btn  bg-base-300  absolute right-0 top-0 z-10 hover:border-0 "
+          >
+            {show ? (
+              <FaRegEye className="text-xl  text-light-gray" />
+            ) : (
+              <FaRegEyeSlash className="text-xl  text-light-gray" />
+            )}
+          </button>
+        </fieldset>
+        <div className="flex justify-between">
+          <div className="flex gap-2 items-center">
+            <input
+              type="checkbox"
+              id="remember"
+              name="remember"
+              className="h-4 w-4 cursor-pointer"
+            />
+            <label
+              htmlFor="remember"
+              className={`text-custom-blue select-none cursor-pointer `}
+            >
+              Remember me
+            </label>
+          </div>
+          <Link href="/forgot-password" className="text-info">
+            Forgot Password?
+          </Link>
+        </div>
+        <button
+          id="submitButton"
+          className="btn btn-block bg-custom-blue font-semibold text-white rounded-lg"
+        >
+          Login
+        </button>
+      </form>
+    </>
+  );
+};
+export default LoginForm;

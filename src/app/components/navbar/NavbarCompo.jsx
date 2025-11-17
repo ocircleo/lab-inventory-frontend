@@ -1,15 +1,22 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ThemeButton from "@/app/components/theme/ThemeButton"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link'
+import { getCachedUser } from '@/app/utls/cookies/cookies';
+import { AuthContext } from '@/app/state/AuthProvider';
 
-const Navbar = () => {
+const NavbarCompo = ({ data }) => {
     const [show, setShow] = useState(false);
     const toggleNav = () => {
         setShow(!show);
     };
+    const { fetchUserData } = useContext(AuthContext)
+    useEffect(() => {
+        if (data == undefined) return;
+        fetchUserData(data);
+    }, []);
     return (
         <div className='bg-base-100'>
             <div className="navbar  h-20  w-full lg:w-[90%] mx-auto">
@@ -52,44 +59,49 @@ const Navbar = () => {
     );
 }
 
-export default Navbar;
+export default NavbarCompo;
 
 
 function Profile() {
+    const { user } = useContext(AuthContext)
+
     return (<>
         <div className="hidden lg:dropdown dropdown-end">
             {/* if user is not logged in then show this dropdown */}
-
-            <div tabIndex={1} role="button" className="btn btn-ghost btn-circle avatar ms-8">
-                <button className='btn bg-custom-blue text-white'>Get Started</button>
-            </div>
-            <ul
-                tabIndex={1}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li><Link href="/login">Login</Link></li>
-                <li><Link href="/register">Register</Link></li>
-            </ul>
-
-            {/* If User is  logged in then show this dropdown */}
-            {/* <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                    <img
-                        alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            {user?.email ? <>
+                {/* If User is  logged in then show this dropdown */}
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                        <img
+                            alt="Tailwind CSS Navbar component"
+                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    </div>
                 </div>
-            </div>
-            <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li>
-                    <a className="justify-between">
-                        Profile
-                        <span className="badge">New</span>
-                    </a>
-                </li>
-                <li><a>Settings</a></li>
-                <li><a>Logout</a></li>
-            </ul> */}
+                <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a className="justify-between">
+                            Courses
+                            {/* <span className="badge">New</span> */}
+                        </a>
+                    </li>
+                    <li><Link href={user?.role == "admin" ? "/admin" : "/dashboard"}>{user?.name ? user?.name : "profile"}</Link></li>
+                    <li><Link href={"/logout"}>Logout</Link></li>
+                </ul>
+            </> :
+                <>
+                    <div tabIndex={1} role="button" className="btn btn-ghost btn-circle avatar ms-8">
+                        <button className='btn bg-custom-blue text-white'>Get Started</button>
+                    </div>
+                    <ul
+                        tabIndex={1}
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        <li><Link href="/login">Login</Link></li>
+                        <li><Link href="/register">Register</Link></li>
+                    </ul>
+                </>}
+
         </div>
     </>)
 }
@@ -153,35 +165,42 @@ function Dropdown({ toggleNav }) {
     </>)
 }
 function DropdownSubMenuAccount() {
+    const { user, } = useContext(AuthContext)
     return (<>
-        {/* If User is not logged in then show this dropdown */}
-        <details open>
-            <summary className='bg-base-300'>Get Started</summary>
-            <ul>
-                <li><a>Login</a></li>
-                <li><a>Register</a></li>
+        {
+            user?.email ? <>
+                {/* If User is logged in then show this dropdown */}
+                <details open>
+                    <summary className='bg-base-300'>
+                        <div className="w-8 h-8 rounded-full">
+                            <img className='rounded-full'
+                                alt="Tailwind CSS Navbar component"
+                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        </div>
+                        Account
+                    </summary>
+                    <ul>
+                        <li><Link href={"/dashboard"}>Courses</Link></li>
+                        <li><Link href={user?.role == "admin" ? "/admin" : "/dashboard"}>{user?.name ? user?.name : "profile"}</Link></li>
+                        <li><Link href={"/logout"}>Logout</Link></li>
 
-            </ul>
-        </details>
+                    </ul>
+                </details>
+
+            </> : <> {/* If User is not logged in then show this dropdown */}
+                <details open>
+                    <summary className='bg-base-300'>Get Started</summary>
+                    <ul>
+                        <li><Link href={"/login"}>Login</Link></li>
+                        <li><Link href={"/register"}>Register</Link></li>
+
+                    </ul>
+                </details></>
+        }
 
 
-        {/* If User is logged in then show this dropdown */}
-        {/* <details open>
-            <summary className='bg-base-300'>
-                <div className="w-8 h-8 rounded-full">
-                    <img className='rounded-full'
-                        alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                </div>
-                Account
-            </summary>
-            <ul>
-                <li><a>Courses</a></li>
-                <li><a>Profile</a></li>
-                <li><a>Logout</a></li>
 
-            </ul>
-        </details> */}
+
 
     </>)
 }
