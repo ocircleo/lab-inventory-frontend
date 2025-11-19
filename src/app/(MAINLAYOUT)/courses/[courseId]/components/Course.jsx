@@ -10,31 +10,30 @@ import CoursePrice from './CoursePrice';
 
 
 
-const Course = () => {
+const Course = ({ data }) => {
     return (
         <div className="px-4 md:px-0">
-            {<CourseWelcome />}
-            {<RestOfCourseDetailSection />}
+            {<CourseWelcome data={data} />}
+            {<RestOfCourseDetailSection data={data} />}
         </div>
     );
 }
 
 export default Course;
 
-const CourseWelcome = () => {
+const CourseWelcome = ({ data }) => {
     return (<>
         <div className='w-full bg-black/90 text-white '>
             <div className="w-full md:w-[90%] lg:w-[70%] mx-auto grid grid-cols-3 h-full md:gap-4 lg:gap-8">
                 <div className='w-full col-span-3 md:col-span-2 px-4 pt-2 pb-8 '>
                     <div className="breadcrumbs text-sm">
                         <ul>
-                            <li><a>Development</a></li>
-                            <li><a>Programming Language</a></li>
-                            <li>Python</li>
+                            <li><a>{data?.type}</a></li>
+                            <li><a>{data?.category}</a></li>
                         </ul>
                     </div>
-                    <h1 className='text-3xl font-bold py-6'>100 Days of code: The complete Python Pro Boot camp</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, ea. Accusantium sit temporibus tempora excepturi incidunt voluptas facere voluptatem, inventore</p>
+                    <h1 className='text-3xl font-bold py-6'>{data?.title}</h1>
+                    <p>{data?.description}</p>
                     <div className='flex gap-2 items-center my-2'>
 
                         <span className='text-yellow-500 text-sm font-semibold'>4.7</span>
@@ -59,16 +58,16 @@ const CourseWelcome = () => {
                     <div className='flex items-center gap-1'>
                         <p>Created by - </p>
                         {/* //Links of creators */}
-                        <Link href={"?"} className='text-blue-400 underline underline-offset-4'>MD. Salman </Link> |
-                        <Link href={"?"} className='text-blue-400 underline underline-offset-4'>Mossarof Hossain</Link>
+                        <Link href={"?"} className='text-blue-400 underline underline-offset-4'>{data?.instructors[0]} </Link>
+
                     </div>
                     <div className='flex gap-4 items-center my-2'>
                         <div className='flex gap-1 items-center'><MdUpdate className='text-xl pt-1' /> <p>Last Updated: 04/25</p></div>
-                        <div className='flex items-center gap-1'><GrLanguage className='text-lg pt-1' /> <p>Language English</p></div>
+                        <div className='flex items-center gap-1'><GrLanguage className='text-lg pt-1' /> <p>Language {data?.language?.join(",") || "English"}</p></div>
                     </div>
                 </div>
                 <div className='col-span-3 md:col-span-1 relative'>
-                    {<CoursePrice></CoursePrice>}
+                    {<CoursePrice data={data}></CoursePrice>}
                 </div>
             </div>
         </div>

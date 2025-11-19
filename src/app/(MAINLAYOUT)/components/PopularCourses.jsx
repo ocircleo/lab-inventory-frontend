@@ -87,7 +87,7 @@ function CategorySlider({ children }) {
         let ScrollElement;
 
         ScrollElement = container.current;
-        console.log(ScrollElement);
+      
 
         let to = ScrollElement.scrollLeft - scrolling_length;
 
@@ -102,7 +102,7 @@ function CategorySlider({ children }) {
         let ScrollElement;
 
         ScrollElement = container.current;
-        console.log(ScrollElement);
+     
         let to = ScrollElement.scrollLeft + scrolling_length;
 
         ScrollElement.scrollTo({

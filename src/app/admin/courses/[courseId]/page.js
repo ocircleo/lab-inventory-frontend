@@ -5,13 +5,14 @@ import CourseImage from "../../_components/CourseComponent/CourseImage";
 import Link from "next/link";
 
 const Page = async ({ params }) => {
-  const courseId = params?.userId;
+  const courseId = (await params)?.courseId;
   let data;
   try {
-    const req = await fetch(API + "/apiUrl" + courseId, {
+    const req = await fetch(API + "/common/get-course/" + courseId, {
       cache: "no-store",
     });
-    data = await req.json();
+    const res = await req.json();
+    data = res?.data || {};
   } catch (error) {
     console.log("Error fetching course data: ", error);
   }
@@ -19,7 +20,7 @@ const Page = async ({ params }) => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Update Course</h1>
       <div className="">
-        <CourseImage data={data?.data || {}} />
+        <CourseImage data={data} />
         <div className="col-span-2 flex items-center gap-4 my-6 ">
           <p className="font-semibold">Edit Modules</p>
           <Link
@@ -32,7 +33,7 @@ const Page = async ({ params }) => {
         <CourseForm
           preData={{
             type: "update",
-            data: data?.data || {},
+            data: data,
           }}
         ></CourseForm>
       </div>

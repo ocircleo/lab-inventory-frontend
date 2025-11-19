@@ -33,6 +33,7 @@ const AuthProvider = ({ children }) => {
         credentials: "include",
       });
       const result = await res.json();
+     
       if (result.success) setUser(result.data);
     } catch (error) {
       Alert("error", "Failed to fetch user data");

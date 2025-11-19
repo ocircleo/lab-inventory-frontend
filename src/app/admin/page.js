@@ -7,6 +7,7 @@ const Page = () => {
   const { user, fetchUserDataAuto } = useContext(AuthContext);
   useEffect(() => {
     if (!user) fetchUserDataAuto();
+
   }, []);
   
   return (
@@ -14,6 +15,7 @@ const Page = () => {
       <h1>Admin page</h1>
       <p>User name: {user?.name}</p>
       <p>User Email: {user?.email}</p>
+      <p>ID: {user?._id}</p>
 
     </div>
   );

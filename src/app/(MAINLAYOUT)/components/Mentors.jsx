@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { FaCirclePlay } from "react-icons/fa6";
 // import { useEffect, useRef } from "react";
 const returnImageIndex = (index, type = "num") => {
@@ -51,7 +52,7 @@ function Card({ data }) {
 
                     </div>
                     <div style={{ boxShadow: "0 0 25px rgba(0,0,0,.45) inset", }} className="z-10 h-full w-64 bg-transparent rounded-lg absolute top-0 left-0  "></div>
-                    <img src={`/images/mentors/${returnImageIndex(data)}.png`} alt="" className='w-full xxs:w-64 h-72 rounded-lg bg-base-100 object-cover  ' />
+                    <Image height={320} width={256} src={`/images/mentors/${returnImageIndex(data)}.png`} alt="" className='w-full xxs:w-64 aspect-[4/5] rounded-lg bg-base-100 object-cover  ' />
                 </div>
 
                 <div className="w-64 h-72  p-2 flex justify-end flex-col gap-4 rounded-lg  duration-150 shrink-0"><HiddenCardData></HiddenCardData></div>

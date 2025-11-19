@@ -26,15 +26,15 @@ const Users = async ({ query }) => {
     })();
 
     return (
-        <div className='bg-gray-200 rounded min-h-20 p-5 me-3'>
-            <div className='text-center font-semibold bg-white rounded mb-2 grid grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2 justify-between items-center'>
-                <div className='col-span-3 md:col-span-2   bg-gray-50 p-3'>
+        <div className='bg-base-100 rounded min-h-20 p-5 me-3'>
+            <div className='text-center font-semibold rounded mb-2 grid bg-base-200 grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2 justify-between items-center'>
+                <div className='col-span-3 md:col-span-2    p-3'>
                     <p>User</p>
                 </div>
                 <div className='col-span-3 md:col-span-1'>
                     <p>Role</p>
                 </div>
-                <div className='col-span-3 md:col-span-2 h-full flex items-center justify-center bg-gray-50'>
+                <div className='col-span-3 md:col-span-2 h-full flex items-center justify-center'>
                     <p >@Email</p>
 
                 </div>
@@ -42,9 +42,9 @@ const Users = async ({ query }) => {
                     Action
                 </div>
             </div>
-            {users.map((ele, index) => <div key={index} className=' bg-white rounded mb-2 grid grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2 items-center text-center'>
+            {users.map((ele, index) => <div key={index} className=' bg-base-200 rounded mb-2 grid grid-cols-6 grid-rows-2 md:grid-rows-1 gap-2 items-center text-center'>
                 {/* name, role, email, phone,actionButton,profileIcon */}
-                <div className='flex items-center  gap-3 col-span-4 md:col-span-2 bg-gray-50 p-3'>
+                <div className='flex items-center  gap-3 col-span-4 md:col-span-2  p-3'>
                     <span className='w-10 aspect-square rounded-full flex items-center justify-center bg-green-500 font-semibold text-lg text-white '>S</span>
                     <p>{stringClip("salman Hossain", 10)}</p>
 
@@ -53,7 +53,7 @@ const Users = async ({ query }) => {
                     <p className='inline-block font-semibold bg-amber-400 px-2 rounded'>Admin</p>
 
                 </div>
-                <div className='col-span-4 md:col-span-2 bg-gray-50 h-full flex items-center overflow-clip justify-center'>
+                <div className='col-span-4 md:col-span-2  h-full flex items-center overflow-clip justify-center'>
 
                     <p className='underline text-blue-400 inline-block'>{stringClip("salmanhossain11222626@gmail.com", 22)}</p>
                 </div>

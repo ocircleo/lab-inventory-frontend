@@ -1,12 +1,13 @@
 import React from "react";
 import CoursesListView from "./CoursesListView";
+import API from "@/app/components/API";
 
 const Page = async () => {
   try {
-    const req = await fetch("http://192.168.0.100:5000");
+    const req = await fetch(API + "/common/get-courses?limit=1000");
     const res = await req.json();
-    const data = (await res?.data?.courses) || [...new Array(10).keys()];
-    console.log(res);
+    const data = (await res?.data) || [];
+
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">List of all Courses</h1>

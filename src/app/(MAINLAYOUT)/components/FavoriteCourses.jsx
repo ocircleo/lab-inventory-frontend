@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 const returnImageIndex = (index, type = "num") => {
     index++;
@@ -26,7 +27,7 @@ function Card({ data }) {
         <div className='shadow-sm rounded-2xl p-4  shrink-0 w-full xxs:w-96 cursor-pointer  bg-base-100 hover:bg-base-300'>
             <div className='relative'>
                 <div className='absolute top-3 left-2 bg-gray-300/25 backdrop-blur-2xl px-3 rounded-full py-1 text-sm shadow'>⭐ 4.7 (112)</div>
-                <img src={`/images/courses/${returnImageIndex(data, "char")}.png`} alt="" className='w-full h-44 rounded-3xl bg-base-100 object-cover' />
+                <Image height={192} width={384} src={`/images/courses/${returnImageIndex(data, "char")}.png`} alt="" className='w-full xxs:w-96 aspect-[4/2] rounded-3xl bg-base-100 object-cover' />
             </div>
             <div className='flex justify-between pt-2 pb-1 text-sm font-semibold'>
                 <p>Beyond Pixels: Mastering Advanced Photoshop Techniques</p>

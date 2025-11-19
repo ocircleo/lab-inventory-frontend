@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 const returnImageIndex = (index, type = "num") => {
     index++;
@@ -31,7 +32,7 @@ function Card({data}) {
 
                 </div>
                 <div style={{ boxShadow: "0 0 25px rgba(0,0,0,.25) inset", }} className="z-10 h-full w-full bg-transparent rounded-lg absolute top-0 left-0  "></div>
-                <img src={`/images/courses/${returnImageIndex(data)}.png`} alt="" className='w-full h-72 rounded-lg bg-base-100 object-cover  ' />
+                <Image height={320} width={256} src={`/images/courses/${returnImageIndex(data)}.png`} alt="" className='w-full xxs:w-64 h-auto aspect-[4/5] rounded-lg bg-base-100 object-cover  ' />
             </div>
         </div>
     </>)

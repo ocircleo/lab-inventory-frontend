@@ -1,4 +1,5 @@
 "use client";
+import Alert from "@/app/components/alert/Alert";
 import API from "@/app/components/API";
 import FireApp from "@/app/utls/FireApp/FireApp";
 import {
@@ -8,10 +9,18 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import React, { useRef, useState } from "react";
-const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
-  const router = useRouter();
+const ImageFrom = ({
+  data,
+  imgUrl,
+  targetIndex,
+  toggleUploading,
+  uploading,
+  type,
+}) => {
+  let previousUrl = imgUrl;
+  // console.log("image Form: ", targetIndex, imgUrl);
   const imgRef = useRef(null);
   const [upload, setUpload] = useState({
     status: false,
@@ -21,14 +30,22 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
   let storage = getStorage(FireApp);
   //upload image function
   const handelFileChange = async (e) => {
-    let mainUrlPart;
-    if (imgUrl) {
-      let firstUrlPart = imgUrl.split("?");
-      let secondUrlPart = firstUrlPart[0].split("o/");
-      mainUrlPart = secondUrlPart[1];
-      mainUrlPart = mainUrlPart.replace("%2F", "/");
-      mainUrlPart = mainUrlPart.replace("%2f", "/");
+    if (uploading) {
+      console.log("image is already being uploaded");
+      return Alert("error", "Please wait while uploading image");
+    } else {
+      console.log("change upload state");
+      toggleUploading();
     }
+    let mainUrlPart;
+    if (previousUrl) {
+      let firstUrlPart = previousUrl.split("?");
+
+      let secondUrlPart = firstUrlPart[0];
+      secondUrlPart = secondUrlPart.split("x-img");
+      mainUrlPart = secondUrlPart[1];
+    }
+
     let fileInput = e.target;
     let file = fileInput.files[0];
     let name, type;
@@ -43,7 +60,9 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
     name = `${Date.now()}x${Math.random()
       .toString(36)
       .slice(2, 11)}.${extension}`;
-    const filePath = mainUrlPart ? mainUrlPart : "bangladeshcounsel/" + name;
+    const filePath = mainUrlPart
+      ? `bangladeshcounsel/courses/${data._id}/assets/x-img${mainUrlPart}`
+      : `bangladeshcounsel/courses/${data._id}/assets/x-img${name}`;
     const storageRef = ref(storage, filePath);
     const metadata = { contentType: type };
     const uploadTask = uploadBytesResumable(storageRef, file, metadata);
@@ -75,27 +94,19 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           try {
             let url = downloadURL;
-            let upData = { id: data._id, url, index: targetIndex, type };
+            let upData = { id: data._id, targetIndex, url };
 
-            const res = await fetch(API + "course/upload-image", {
+            const res = await fetch(API + "/courses/upload-image", {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                credentials: "include",
               },
+              credentials: "include",
               body: JSON.stringify(upData),
             });
             const result = await res.json();
-
+            window.location.reload();
             // console.log("Image upload success message: ", result);
-            setUpload({
-              status: false,
-              progress: 0,
-              error: false,
-            });
-            if (imgRef.current) {
-              imgRef.current.setAttribute("src", url);
-            }
           } catch (error) {
             console.log("Server error:", error.message);
           }
@@ -105,44 +116,47 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
   };
 
   const deleteFile = async () => {
-    if (!imgUrl) return;
+    if (!previousUrl) return;
     try {
       let mainUrlPart;
-      if (imgUrl) {
-        let firstUrlPart = imgUrl.split("?");
-        let secondUrlPart = firstUrlPart[0].split("o/");
+      if (previousUrl) {
+        let firstUrlPart = previousUrl.split("?");
+
+        let secondUrlPart = firstUrlPart[0];
+        secondUrlPart = secondUrlPart.split("x-img");
         mainUrlPart = secondUrlPart[1];
-        mainUrlPart = mainUrlPart.replace("%2F", "/");
-        mainUrlPart = mainUrlPart.replace("%2f", "/");
       }
-      const storageRef = ref(storage, mainUrlPart);
+      const storageRef = ref(
+        storage,
+        `bangladeshcounsel/courses/${data._id}/assets/x-img${mainUrlPart}`
+      );
       deleteObject(storageRef)
         .then(async () => {
-          let update = { id: data._id, url: imgUrl };
-          const res = await fetch(API + "course/delete-image", {
-            method: "PUT",
+          let update = { id: data._id, url: null, targetIndex };
+          const res = await fetch(API + "/courses/delete-image", {
+            method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              credentials: "include",
             },
+            credentials: "include",
             body: JSON.stringify(update),
           });
           const result = await res.json();
-          if (!result.error) router.refresh();
+          window.location.reload();
         })
         .catch(async (error) => {
           if (error.code == "storage/object-not-found") {
-            let update = { id: data._id, url: imgUrl };
-            const res = await fetch(API + "course/delete-image", {
-              method: "PUT",
+            let update = { id: data._id, url: null, targetIndex };
+            const res = await fetch(API + "/courses/delete-image", {
+              method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-                credentials: "include",
               },
+              credentials: "include",
               body: JSON.stringify(update),
             });
             const result = await res.json();
-            if (!result.error) router.refresh();
+            window.location.reload();
           }
         });
     } catch (error) {
@@ -152,13 +166,13 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
   return (
     <div className="relative rounded   w-full h-full p-2  overflow-hidden">
       {/* upload and delete button below  */}
-      <div className="absolute top-0 right-0 rounded  flex gap-2 p-2 z-30">
+      <div className="absolute bottom-0  right-0 rounded  flex gap-2 pb-4 pe-4 z-30 ">
         <fieldset className="relative p-1 ">
           <label
-            className="bg-green-500 text-white px-3 py-1 active:bg-black active:text-white rounded z-40 cursor-pointer select-none"
+            className="bg-custom-blue font-semibold text-white px-3 py-1 duration-100 active:scale-90 active:text-white rounded z-40 cursor-pointer select-none"
             htmlFor={targetIndex + "update"}
           >
-            Upload : {targetIndex + 1}
+            Upload
           </label>
           <input
             onChange={handelFileChange}
@@ -171,7 +185,7 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
         </fieldset>
         <button
           onClick={deleteFile}
-          className="bg-red-600 text-white px-3 py-1 active:bg-black active:text-white rounded cursor-pointer select-none"
+          className="bg-black text-white px-3 duration-100 active:scale-90 active:text-white rounded cursor-pointer select-none"
         >
           Delete
         </button>
@@ -200,13 +214,21 @@ const ImageFrom = ({ data, imgUrl, targetIndex, type }) => {
         ) : (
           ""
         )}
-        <img
-          ref={imgRef}
-          src={imgUrl}
-          className="absolute top-0 left-0 h-full w-full bg-transparent z-20"
-        ></img>
+        {previousUrl && previousUrl?.length > 10 ? (
+          <Image
+            width={328}
+            height={328}
+            ref={imgRef}
+            src={previousUrl}
+            alt="image"
+            className="absolute top-0 left-0 h-full w-full bg-transparent z-20"
+          ></Image>
+        ) : (
+          ""
+        )}
+
         <div className="absolute top-0 left-0 h-full w-full bg-base-100 z-10 grid place-content-center text-xl font-semibold">
-          {imgUrl ? "Loading Image..." : "No Image"}
+          {previousUrl ? "Loading Image..." : "No Image"}
         </div>
       </div>
     </div>

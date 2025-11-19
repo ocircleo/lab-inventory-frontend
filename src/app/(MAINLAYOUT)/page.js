@@ -8,8 +8,6 @@ import Mentors from "@/app/(MAINLAYOUT)/components/Mentors";
 import StartTeaching from "@/app/(MAINLAYOUT)/components/StartTeaching";
 import Stories from "@/app/(MAINLAYOUT)/components/Stories";
 
-
-
 const Home = () => {
   return (
     <div className="w-full lg:w-[90%] mx-auto">

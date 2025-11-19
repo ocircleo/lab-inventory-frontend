@@ -2,6 +2,7 @@ import { RiLayout2Fill } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 import { LuCalendarClock } from "react-icons/lu";
 import { AiFillLike } from "react-icons/ai";
+import Image from "next/image";
 const Discover = () => {
     return (<div className='flex flex-col w-full bg-base-100 mt-12 p-4'>
         <div className='lg:hidden  items-center justify-center'>
@@ -9,8 +10,10 @@ const Discover = () => {
         </div>
         <div className='grid grid-cols-5 w-full '>
             <div className='col-span-5 lg:col-span-2 relative w-full  h-full xs:h-[300px] sm:h-[400px] lg:h-[600px]  flex items-center justify-center'>
-                <img src={'/images/images/discover.png'} alt="" className='z-10 w-full h-auto max-h-full xs:h-full xs:w-auto object-cover' />
-                <img src={'/images/images/imagebg.png'} alt="" className=' absolute bottom-0 h-auto max-h-full xs:h-full xs:w-auto object-cover' />
+                {/* <img src={'/images/images/discover.png'} alt="" className='z-10 w-full h-auto max-h-full xs:h-full xs:w-auto object-cover' />
+                <img src={'/images/images/imagebg.png'} alt="" className=' absolute bottom-0 h-auto max-h-full xs:h-full xs:w-auto object-cover' /> */}
+                <Image width={484} height={560} src={'/images/images/imagebg.png'} alt="" className='z-0 absolute bottom-0 w-full md:w-[28rem] aspect-[4/5] object-cover' />
+                <Image width={448} height={560} src={'/images/images/discover.png'} alt="" className='z-10 w-full md:w-[28rem] aspect-[4/5] object-cover' />
             </div>
             <div className='col-span-5 lg:col-span-3  '>
                 <div className=" w-full h-full ">
