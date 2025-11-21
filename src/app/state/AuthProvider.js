@@ -1,8 +1,9 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import API from "../components/API";
-import Alert from "../components/alert/Alert";
+import API from "../_components/API";
+import Alert from "../_components/alert/Alert";
+
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {

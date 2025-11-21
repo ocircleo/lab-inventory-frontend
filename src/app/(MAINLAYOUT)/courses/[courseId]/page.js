@@ -1,5 +1,4 @@
 import React from "react";
-import Course from "./components/Course";
 import NotFound from "@/app/not-found";
 import API from "@/app/components/API";
 
@@ -12,7 +11,7 @@ const Page = async ({ params, searchParams }) => {
     const res = await req.json();
     return (
       <>
-        <Course data={res.data} />
+        <div>Course</div>
       </>
     );
   } catch (error) {

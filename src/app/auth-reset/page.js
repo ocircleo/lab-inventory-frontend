@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Alert from "../components/alert/Alert";
-import API from "../components/API";
+import API from "../_components/API";
 
 const Page = () => {
   const router = useRouter();

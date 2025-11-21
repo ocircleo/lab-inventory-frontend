@@ -1,5 +1,5 @@
 "use client";
-import API from '@/app/components/API';
+import API from '@/app/_components/API';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Alert from '../UserDetaill/detaill';
@@ -40,7 +40,7 @@ const CourseForm = ({ preData }) => {
         }
     }
     return (<form onSubmit={submitHandler}
-        className="grid grid-cols-2 gap-4 w-full   mt-8"
+        className="grid grid-cols-2 gap-4 w-full mt-8"
     >
         <fieldset className="col-span-2 md:col-span-1 flex flex-col gap-2">
             <label htmlFor="title" className='p-1'>Course Title</label>

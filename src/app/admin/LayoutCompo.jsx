@@ -10,100 +10,35 @@ const dashboardLinks = [
         href: "/admin",
         description: "Manage users, search, change roles"
     },
+
     {
-        label: "Users",
-        href: "/admin/users",
-        description: "Manage users, search, change roles"
-    },
-    {
-        label: "Courses",
-        href: "/admin/courses",
-        description: "Manage courses",
-        children:[
-            { label: "Add Course", href: "/admin/add-course" },
+        label: "labs",
+        href: "/admin/labs",
+        description: "All Labs",
+        children: [
+            { label: "Add Lab", href: "/admin/add-lab" },
+            { label: "Edit Lab", href: "/admin/edit-lab" }
         ]
     },
-    // {
-    //     label: "Broadcast Message",
-    //     href: "/admin/broadcast",
-    //     children: [
-    //         { label: "Email", href: "/admin/broadcast/email" },
-    //         { label: "In-app Message", href: "/admin/broadcast/inapp" },
-    //         { label: "SMS", href: "/admin/broadcast/sms" },
-    //     ],
-    // },
-    // {
-    //     label: "Receive Messages",
-    //     href: "/admin/messages",
-    //     children: [
-    //         { label: "Email Inbox", href: "/admin/messages/email" },
-    //         { label: "Web Inbox", href: "/admin/messages/web" },
-    //         { label: "Reply", href: "/admin/messages/reply" },
-    //     ],
-    // },
-    // {
-    //     label: "Stats",
-    //     href: "/admin/stats",
-    //     children: [
-    //         {
-    //             label: "User/Mentor Stats",
-    //             href: "/admin/stats/user",
-    //             children: [
-    //                 { label: "Purchases", href: "/admin/stats/user/purchases" },
-    //                 { label: "Active Courses", href: "/admin/stats/user/active-courses" },
-    //                 { label: "Completions", href: "/admin/stats/user/completions" },
-    //                 { label: "Profile Details", href: "/admin/stats/user/profile" },
-    //             ],
-    //         },
-    //         {
-    //             label: "Course Stats",
-    //             href: "/admin/stats/course",
-    //             children: [
-    //                 { label: "Total Classes", href: "/admin/stats/course/classes" },
-    //                 { label: "Enrolled Students", href: "/admin/stats/course/enrolled" },
-    //                 { label: "Active vs Completed", href: "/admin/stats/course/progress" },
-    //                 { label: "Ratings", href: "/admin/stats/course/ratings" },
-    //             ],
-    //         },
-    //         {
-    //             label: "Platform Stats",
-    //             href: "/admin/stats/platform",
-    //             children: [
-    //                 { label: "Revenue", href: "/admin/stats/platform/revenue" },
-    //                 { label: "DAU/MAU", href: "/admin/stats/platform/dau-mau" },
-    //                 { label: "Conversion", href: "/admin/stats/platform/conversion" },
-    //                 { label: "Retention", href: "/admin/stats/platform/retention" },
-    //                 { label: "NPS", href: "/admin/stats/platform/nps" },
-    //             ],
-    //         },
-    //     ],
-    // },
-    // {
-    //     label: "Role & Permission Management",
-    //     href: "/admin/roles",
-    // },
-    // {
-    //     label: "Content Moderation",
-    //     href: "/admin/moderation",
-    //     children: [
-    //         { label: "Flagged Content Review", href: "/admin/moderation/flagged" },
-    //     ],
-    // },
-    // {
-    //     label: "System Logs & Audit Trail",
-    //     href: "/admin/logs",
-    // },
-    // Add other useful links for admin
-    // {
-    //     label: "Settings",
-    //     href: "/admin/settings",
-    //     children: [
-    //         { label: "Password", href: "/admin/settings/password" },
-    //         { label: "2FA", href: "/admin/settings/2fa" },
-    //         { label: "Language", href: "/admin/settings/language" },
-    //         { label: "Time Zone", href: "/admin/settings/timezone" },
-    //     ],
-    // },
+    {
+        label: "Templates",
+        href: "/admin/templates",
+        description: "All Labs",
+    },
+    {
+        label: "Add Template",
+        href: "/admin/add-template",
+    },
+    {
+        label: "Assign Users",
+        href: "/admin/assign-users",
+        description: "Manage search Users"
+    },
+    {
+        label: "Logs",
+        href: "/admin/logs",
+        description: "Manage search Logs"
+    },
     {
         label: "Home",
         href: "/",

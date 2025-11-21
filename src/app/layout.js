@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./css/alert.css";
 import "./css/scroll.css";
-import ThemeCompo from "./components/theme/ThemeCompo";
+import ThemeCompo from "./_components/theme/ThemeCompo";
 import AuthProvider from "./state/AuthProvider";
 
 const geistSans = Geist({
@@ -17,11 +17,10 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: {
-    template: "%s | Bangladesh Counsel for Career Excellence",
-    default: "Bangladesh Counsel for Career Excellence",
+    template: "%s | Inventory Manager",
+    default: "Inventory Manager",
   },
-  description:
-    "Boost your career with expert-led courses tailored for success in Bangladesh. Discover skills that employers value, advance professionally, and unlock new opportunities with our career development programs.",
+  description: "Simple Inventory manager ",
 };
 
 export default function RootLayout({ children }) {

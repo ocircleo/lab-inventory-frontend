@@ -1,18 +1,15 @@
-import Footer from "@/app/components/footer/Footer";
 import { cookies } from "next/headers";
-import Navbar from "../components/navbar/Navbar";
 
 const MainLayout = async ({ children }) => {
   const cookie = await cookies();
-  let access_token =  cookie.get("access_token")?.value;
-  // console.log("Request: ", data);
-  //Theme changer event Handler DARK or LIGHT
+  let access_token = cookie.get("access_token")?.value;
 
+  // !-- hare according to cookie we will try to load user detail
+  // and show it also show dashboard link if found user
+  // This page will contain the product info may be a guide video and the above feature
   return (
     <div className="min-h-screen w-full bg-base-200 flex flex-col justify-between">
-      <Navbar data={access_token}></Navbar>
       <div className=" w-full grow">{children}</div>
-      <Footer></Footer>
     </div>
   );
 };

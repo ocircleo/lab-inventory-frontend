@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import API from "./app/components/API";
+import API from "./app/_components/API";
 
 export const middleware = async (request) => {
   let cookie = request.cookies.get("access_token")?.value;
@@ -9,44 +9,36 @@ export const middleware = async (request) => {
 
   if (passed) return response;
 
-  if (!passed) return Response.redirect("http://localhost:3000" + to);
+  if (!passed)
+    return Response.redirect(`${process.env.NEXT_PUBLIC_WEBURL}` + to);
 };
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/user/:path*",
-    "/dashboard/:path*",
-    "/register",
-    "/login",
-  ],
+  matcher: ["/admin/:path*", "/user/:path*", "/staff/:path*"],
 };
 
 async function userValidation(path, cookie) {
-  if (cookie && (path == "/login" || path == "/register"))
-    return { passed: false, to: "/auth-reset" };
-  else if (!cookie && (path == "/login" || path == "/register"))
-    return { passed: true, to: "/" };
   if (!cookie) return { passed: false, to: `/login?redirect=${path}` };
-  if (path.startsWith("/admin")) {
-    try {
-      let res = await fetchUser(cookie);
-      const result = await res.json();
-      if (result.data?.role == "admin") return { passed: true, to: path };
-      return { passed: false, to: "/auth-error" };
-    } catch (error) {
-      return { passed: false, to: "/auth-error" };
-    }
-  }
 
   try {
     let res = await fetchUser(cookie);
     const result = await res.json();
-    if (result.data?.email) return { passed: true, to: path };
-
+    //if user is found successfully the validate path
+    if (result.data?.email) {
+      if (path.startsWith("/admin") && result.data?.role == "admin")
+        return { passed: true, to: path };
+      else if (path.startsWith("/staff") && result.data?.role == "staff")
+        return { passed: true, to: path };
+      else if (path.startsWith("/user") && result.data?.role == "user")
+        return { passed: true, to: path };
+      //if user tries to go to unauthorized paths then redirect
+      else return { passed: false, to: "/auth-error" };
+    }
+    //fallback if user data is tampered of not found but api response is successful
     return { passed: false, to: "/auth-reset" };
   } catch (error) {
-    return { passed: false, to: "/auth-error" };
+    //if error happens while loading user info
+    return { passed: false, to: "/auth-reset" };
   }
 }
 async function fetchUser(cookie) {

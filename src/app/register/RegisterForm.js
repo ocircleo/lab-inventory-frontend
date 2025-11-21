@@ -4,11 +4,11 @@ import { TfiEmail } from "react-icons/tfi";
 import { TbLockPassword } from "react-icons/tb";
 import { FaRegEye, FaRegEyeSlash, FaRegUser } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import queryParams from "../components/queryParams/queryParams";
-import API from "../components/API";
-import Alert from "../components/alert/Alert";
+import queryParams from "../_components/queryParams/queryParams";
+import API from "../_components/API";
+import Alert from "../_components/alert/Alert";
 import { AuthContext } from "../state/AuthProvider";
-import fetchWithTimeOut from "../components/fetchwithtimeout/fetchWithTimeOut";
+import fetchWithTimeOut from "../_components/fetchwithtimeout/fetchWithTimeOut";
 export const RegisterForm = () => {
   const [show, setShow] = useState(false);
   const { user, setUser } = useContext(AuthContext);
@@ -32,7 +32,7 @@ export const RegisterForm = () => {
     let name = form.name.value;
     let email = form.email.value;
     let password = form.password.value;
-    let news_letter = form.news.checked;
+    let terms = form.terms.checked;
     let submitButton = form.submitButton;
     submitButton.disabled = true;
     submitButton.innerText = "Please wait...";
@@ -51,7 +51,7 @@ export const RegisterForm = () => {
             name,
             email_address: email,
             password,
-            news_letter,
+            terms,
           }),
         },
         12000
@@ -145,15 +145,15 @@ export const RegisterForm = () => {
           <div className="flex gap-2 items-center">
             <input
               type="checkbox"
-              id="news"
-              name="news"
+              id="terms"
+              name="terms"
               className="h-4 w-4 cursor-pointer"
             />
             <label
-              htmlFor="news"
+              htmlFor="terms"
               className={`text-custom-blue select-none cursor-pointer `}
             >
-              Receive news & Update
+              I agree to the to terms and conditions
             </label>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import ImageFrom from '../../courses/[courseId]/ImageFrom';
+import ImageFrom from '../../labs/[courseId]/ImageFrom';
 
 const CourseImage = ({ data }) => {
     const [uploading, setUploading] = useState(false);

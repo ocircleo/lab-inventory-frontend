@@ -1,8 +1,7 @@
 "use client";
 import React, { useContext } from "react";
-import API from "../components/API";
 import { useRouter } from "next/navigation";
-import Alert from "../components/alert/Alert";
+import Alert from "../_components/alert/Alert";
 import { AuthContext } from "../state/AuthProvider";
 import Link from "next/link";
 

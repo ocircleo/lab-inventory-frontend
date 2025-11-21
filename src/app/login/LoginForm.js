@@ -1,15 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
-import queryParams from "../components/queryParams/queryParams";
-import API from "../components/API";
 import { TfiEmail } from "react-icons/tfi";
 import { TbLockPassword } from "react-icons/tb";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import Alert from "../components/alert/Alert";
 import { AuthContext } from "../state/AuthProvider";
-import fetchWithTimeOut from "../components/fetchwithtimeout/fetchWithTimeOut";
+import API from "../_components/API";
+import Alert from "../_components/alert/Alert";
+import fetchWithTimeOut from "../_components/fetchwithtimeout/fetchWithTimeOut";
+import queryParams from "../_components/queryParams/queryParams";
+
 
 const LoginForm = () => {
   const { user, setUser } = useContext(AuthContext);
