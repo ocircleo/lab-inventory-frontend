@@ -32,7 +32,7 @@ const Page = () => {
     }
   };
   useEffect(() => {
-    fetchTemplateData("all");
+    fetchTemplateData("@all");
   }, []);
   return (
     <div className="p-6">
@@ -47,7 +47,7 @@ const Page = () => {
             name="temName"
             type="text"
             id="temName"
-            defaultValue={"all"}
+            defaultValue={"@all"}
             required
             className="p-2 border-0 bg-base-300 placeholder:text-light-gray  focus:outline-0 w-full"
             placeholder="Template Name"

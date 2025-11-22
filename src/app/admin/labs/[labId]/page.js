@@ -3,7 +3,7 @@ import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import { cookies } from "next/headers";
 import LabForm from "../../_components/lab/LabForm";
 import LabDetail from "./LabDetail";
-import LabTitle from "./LabTitle";
+import LabTitle from "../../_components/lab/LabTitle";
 
 const Page = async ({ params }) => {
   try {

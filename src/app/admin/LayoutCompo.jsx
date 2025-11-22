@@ -17,7 +17,7 @@ const dashboardLinks = [
         description: "All Labs",
         children: [
             { label: "Add Lab", href: "/admin/add-lab" },
-            { label: "Edit Lab", href: "/admin/edit-lab" }
+            { label: "Assign Users", href: "/admin/assign-users" }
         ]
     },
     {
@@ -28,11 +28,6 @@ const dashboardLinks = [
     {
         label: "Add Template",
         href: "/admin/add-template",
-    },
-    {
-        label: "Assign Users",
-        href: "/admin/assign-users",
-        description: "Manage search Users"
     },
     {
         label: "Logs",
