@@ -1,4 +1,4 @@
-
+"use client"
 const ThemeButton = () => {
     const changeTheme = () => {
         let theme_icon = document.getElementById("theme-controller")

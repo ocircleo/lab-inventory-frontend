@@ -276,3 +276,40 @@
   width: 0px;
   height: 0px;
 }
+/* 360° rotation every 10s, linear, infinite */
+@keyframes customSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* WebKit-prefixed keyframes for older Safari/iOS */
+@-webkit-keyframes customSpin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.custom-spin {
+  display: inline-block; /* allow transform on inline elements */
+  will-change: transform; /* hint to browser for smoother animation */
+  animation: customSpin 5s linear infinite;
+  -webkit-animation: customSpin 5s linear infinite; /* Safari */
+  transform-origin: 50% 50%; /* rotate around center */
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .custom-spin {
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+}

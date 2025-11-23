@@ -6,42 +6,19 @@ import ActiveLink from "../utls/ActiveLink/ActiveLink";
 
 const dashboardLinks = [
     {
-        label: "Admin",
-        href: "/admin",
+        label: "Profile",
+        href: "/staff",
         description: "Manage users, search, change roles"
     },
 
     {
-        label: "labs",
-        href: "/admin/labs",
+        label: "MY Labs",
+        href: "/staff/my-labs",
         description: "All Labs",
-        children: [
-            { label: "Add Lab", href: "/admin/add-lab" },
-            { label: "Assign Users", href: "/admin/assign-users" }
-        ]
-    },
-    {
-        label: "Templates",
-        href: "/admin/templates",
-        description: "All Labs",
-    },
-    {
-        label: "Add Template",
-        href: "/admin/add-template",
-    },
-    {
-        label: "Logs",
-        href: "/admin/logs",
-        description: "Manage search Logs"
-    },
-    {
-        label: "Profile",
-        href: "/admin/profile",
-        description: "Manage users, search, change roles"
     },
     {
         label: "Logout",
-        href: "/admin/logout",
+        href: "/staff/logout",
         description: "All Labs",
     },
     {
@@ -53,7 +30,7 @@ const dashboardLinks = [
 const Sidebar = ({ navState, toggleNav }) => {
     return (
         <aside className={` hidden lg:w-64  bg-gray-800 text-white h-screen overflow-y-hidden   sticky top-0 lg:flex flex-col gap-2`}>
-            <p className="text-xl font-bold text-center py-3  border-b-2">Admin Panel</p>
+            <p className="text-xl font-bold text-center py-3  border-b-2">Staff Panel</p>
             <div className="flex flex-col gap-2 px-2 pb-12 overflow-y-auto small-scrollbar">
                 <LinkUiGenerator links={dashboardLinks} />
             </div>
@@ -64,7 +41,7 @@ const Sidebar = ({ navState, toggleNav }) => {
 const MobileSidebar = ({ navState, toggleNav }) => {
     return (
         <div className={`lg:hidden top-0 w-full sm:w-64 bg-[#194164] h-full overflow-y-scroll flex flex-col gap-2 px-2 pt-3 pb-12 fixed duration-100 ${!navState ? "-left-full sm:-left-64" : "left-0"} z-20`}>
-            <p className="text-xl font-bold text-center py-3  border-b-2">Admin Panel</p>
+            <p className="text-xl font-bold text-center py-3  border-b-2">Staff Panel</p>
             <div className="flex flex-col gap-2 px-2 pb-12 overflow-y-auto small-scrollbar">
                 <LinkUiGenerator links={dashboardLinks} click={toggleNav} />
             </div>

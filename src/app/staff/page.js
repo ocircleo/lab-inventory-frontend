@@ -1,14 +1,8 @@
-export const metadata = {
-  title: "Profile",
-  description: "View your profile information.",
-};
-import API from "@/app/_components/API";
 import { cookies } from "next/headers";
-
+import API from "../_components/API";
 const Page = async () => {
   try {
     const cookie = (await cookies()).get("access_token").value;
-    console.log("cookie", cookie);
     if (cookie) {
       const req = await fetch(API + "/auth/login_with_token", {
         method: "PUT",

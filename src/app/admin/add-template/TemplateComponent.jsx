@@ -117,7 +117,7 @@ const TemplateComponent = () => {
 
                                 <button
                                     type="button"
-                                    className="btn btn-error"
+                                    className="btn bg-red-600"
                                     onClick={() => deleteElement(ele.id)}
                                 >
                                     Delete
@@ -145,7 +145,7 @@ const TemplateComponent = () => {
 
                                 <button
                                     type="button"
-                                    className="btn btn-error"
+                                    className="btn bg-red-600"
                                     onClick={() => deleteElement(ele.id)}
                                 >
                                     Delete

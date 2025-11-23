@@ -23,10 +23,8 @@ async function userValidation(path, cookie) {
   try {
     let res = await fetchUser(cookie);
     const result = await res.json();
-    console.log(result);
-    console.log(result.data.role == "user");
     //if user is found successfully the validate path
-    if (result.data?.email) {
+    if (result.data?.email_address) {
       if (path.startsWith("/admin") && result.data?.role == "admin")
         return { passed: true, to: path };
       else if (path.startsWith("/staff") && result.data?.role == "staff")

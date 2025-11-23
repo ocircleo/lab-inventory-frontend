@@ -14,7 +14,7 @@ const LabDetail = ({ data }) => {
                     <p>Staffs: {data?.staffs?.length}</p>
                 </div>
                 <div className='flex gap-4'>
-                    <Link href={"/admin/labs/add-devices/" + data._id} className='bg-custom-blue hover:bg-blue-800 px-3 py-1 rounded'>Add Devices</Link>
+                    <Link href={"/admin/add-devices/" + data._id} className='bg-custom-blue hover:bg-blue-800 px-3 py-1 rounded'>Add Devices</Link>
                     <Link href={`/admin/assign-users?lab=${data._id}`} className='bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded'>Manage Staffs</Link>
                 </div>
             </div>
