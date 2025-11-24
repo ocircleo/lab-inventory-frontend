@@ -12,7 +12,6 @@ const Page = async ({ params }) => {
       headers: { Cookie: (await cookies()).toString() },
     });
     const res = await req.json();
-    console.log(res);
     const data = await res.data;
 
     if (!res?.success)

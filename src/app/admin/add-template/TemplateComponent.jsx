@@ -50,7 +50,7 @@ const TemplateComponent = () => {
         submitButton.disabled = true;
         submitButton.innerText = "Adding...";
         setLoading(true);
-        console.log(data);
+       
         const result = await addTemplate(data)
 
         submitButton.disabled = false;
@@ -155,8 +155,8 @@ const TemplateComponent = () => {
                     </div>
                 ))}
 
-                <div className="col-span-2 flex justify-center my-6">
-                    <button name="submitButton" className="btn btn-block bg-custom-blue text-white">
+                <div className="col-span-2   my-6">
+                    <button name="submitButton" className="btn inline-block bg-custom-blue text-white">
                         Add Template
                     </button>
                 </div>
@@ -165,7 +165,7 @@ const TemplateComponent = () => {
             {/* Add field button */}
             <div className="relative flex justify-center items-center">
                 <button
-                    className="btn bg-custom-blue"
+                    className="btn bg-custom-blue text-white"
                     onClick={(e) => {
                         e.stopPropagation();
                         setShow((prev) => !prev);

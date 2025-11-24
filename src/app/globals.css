@@ -313,3 +313,14 @@
     -webkit-animation: none !important;
   }
 }
+@keyframes scaleBox {
+  from {
+    transform: scale(.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.animate-scale-sm {
+  animation: scaleBox 200ms linear 1 forwards;
+}

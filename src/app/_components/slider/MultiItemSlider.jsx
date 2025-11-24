@@ -80,7 +80,6 @@ const MultiItemSlider = ({ children }) => {
         let ScrollElement, windowWidth;
         windowWidth = window.innerWidth;
         ScrollElement = container.current.children[0];
-        console.log(ScrollElement);
         if (windowWidth <= 768) card_width = windowWidth
         else {
             let tem_width = Number(ScrollElement.children[0].offsetWidth)

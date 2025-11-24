@@ -1,4 +1,3 @@
-import API from "@/app/components/API";
 import Users from "./Users";
 import Form from "./Form";
 import { Suspense } from "react";

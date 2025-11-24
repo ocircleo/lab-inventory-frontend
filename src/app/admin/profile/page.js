@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 const Page = async () => {
   try {
     const cookie = (await cookies()).get("access_token").value;
-    console.log("cookie", cookie);
     if (cookie) {
       const req = await fetch(API + "/auth/login_with_token", {
         method: "PUT",

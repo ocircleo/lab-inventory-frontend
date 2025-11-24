@@ -1,4 +1,4 @@
-import API from "@/app/components/API";
+import API from "@/app/_components/API";
 import UserActions from "./UserActions";
 import ErrorPage from "./error";
 

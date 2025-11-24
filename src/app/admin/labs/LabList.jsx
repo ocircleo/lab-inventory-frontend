@@ -1,28 +1,12 @@
+
 import Alert from "@/app/_components/alert/Alert";
 import API from "@/app/_components/API";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 
 const LabList = ({ data, refresh }) => {
-    const deleteItem = async (id) => {
-        Swal.fire({
-            theme: "dark",
-            title: "Do You Want to delete template?",
-            text: "Might cause Issues later on!!",
-            showCancelButton: true,
-            confirmButtonColor: "red",
-            confirmButtonText: "Delete",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const result = await deleteTemplate(id);
-                if (result.success) {
-                    refresh({ preventDefault: () => { } });
-                    Alert("success", "Deleted Template");
-                } else Alert("error", result.error);
-            }
-        });
-    };
+
     return (
         <div className="flex flex-col gap-2">
             {data?.length == 0 ? (
@@ -48,18 +32,3 @@ const LabList = ({ data, refresh }) => {
 
 export default LabList;
 
-const deleteTemplate = async (id) => {
-    try {
-        const req = await fetch(`${API}/admin/delete-template`, {
-            method: "DELETE",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ id }),
-            credentials: "include",
-        });
-        const res = await req.json();
-        return res;
-    } catch (error) {
-        console.log(error);
-        return { success: false, message: error.message };
-    }
-};

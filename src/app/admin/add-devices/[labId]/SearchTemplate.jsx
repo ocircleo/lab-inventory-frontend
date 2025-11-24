@@ -1,7 +1,7 @@
 import API from '@/app/_components/API';
 import React, { useEffect, useRef, useState } from 'react';
 
-const SearchTemplate = ({ setTemplate }) => {
+const SearchTemplate = ({ setPrevData, setTemplate }) => {
     const [show, setShow] = useState(false)
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
@@ -17,35 +17,34 @@ const SearchTemplate = ({ setTemplate }) => {
         }, 400);
     };
     const fetchTemplateData = async (text) => {
-        if (text.length == 0) return setData([]);
+        if (text.length == 0) {
+            setShow(false)
+            return setData([])
+        };
         try {
             setLoading(true);
 
             const req = await fetch(`${API}/common/searchTemplate?template=${text}`);
             const result = await req.json();
-            console.log(result?.data);
             setLoading(false);
             setData(result?.data);
+            if (result?.data?.length > 0) setShow(true)
         } catch (error) {
             console.log(error);
         }
     };
     const selectItem = (ele) => {
+        let inputElement = inputRef.current;
+        inputElement.value = ele.category;
+
         setTemplate(ele)
+        setPrevData(ele?.dataModel || [])
         setShow(false)
     }
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (boxRef.current && !boxRef.current.contains(e.target)) {
-                setShow(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+
     return (
         <div>
-            <fieldset className="w-full md:w-96 flex flex-col gap-2">
+            <fieldset className="w-full md:w-96 flex flex-col relative">
                 <label htmlFor="temName" className='p-1'>Search Template</label>
                 <input name="temName"
                     type="text"
@@ -57,8 +56,9 @@ const SearchTemplate = ({ setTemplate }) => {
                     placeholder="Name of Template"
                 />
                 <p className={`text-xs ${loading ? "visible" : "invisible"}`}>Loading...</p>
-                {show && <div ref={boxRef} className='flex flex-col gap-2 p-2 bg-base-300'>
-                    {data.map((ele, index) => <button key={"select-" + index} onClick={() => selectItem(ele)}>{ele?.category}</button>)}
+                {show && <div ref={boxRef} className='flex flex-col gap-2 p-2 bg-base-300 absolute top-[5.5rem] w-full '>
+
+                    {data.map((ele, index) => <button key={"select-" + index} onClick={() => selectItem(ele)} className='bg-base-100 py-1 capitalize hover:bg-base-200 btn'>{ele?.category}</button>)}
                 </div>}
 
             </fieldset>

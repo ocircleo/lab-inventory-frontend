@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
+import LabItems from './LabItems';
 
 const LabDetail = ({ data }) => {
+
     return (
         <div className='mt-12 border-t-2 border-dashed pt-6'>
             <p className='inline-block text-lg border-b-2 pb-1 pe-4'>Detail View of <span className='font-semibold text-custom-blue'>{data?.name}</span> </p>
-            <div className="flex justify-between gap-4 bg-base-300 py-2 px-3 rounded mt-4">
-                <div className='flex items-center gap-4'>
+            <div className="flex justify-between gap-4 bg-base-300 py-2 px-3 rounded mt-4 flex-wrap">
+                <div className='flex items-center gap-4 flex-wrap'>
                     <p className=''>No of Devices: {data?.items?.length}</p>
                     <span className='text-custom-blue'>|</span>
                     <p>Active: {data?.items?.length}</p>
@@ -18,7 +20,7 @@ const LabDetail = ({ data }) => {
                     <Link href={`/admin/assign-users?lab=${data._id}`} className='bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded'>Manage Staffs</Link>
                 </div>
             </div>
-
+            <LabItems data={data} />
         </div>
     );
 }

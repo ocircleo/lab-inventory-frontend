@@ -5,7 +5,9 @@ import TemplateUpdateComponent from "./TemplateUpdateComponent";
 const Page = async ({ params }) => {
   try {
     let id = (await params).templateId;
-    const req = await fetch(`${API}/common/template-by-id/${id}`);
+    const req = await fetch(`${API}/common/template-by-id/${id}`, {
+      cache: "no-cache",
+    });
     const res = await req.json();
     const data = await res.data;
 

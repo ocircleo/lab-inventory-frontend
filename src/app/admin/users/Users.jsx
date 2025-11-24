@@ -1,4 +1,4 @@
-import API from '@/app/components/API';
+import API from '@/app/_components/API';
 import stringClip from '@/app/utls/stringClip/stringClip';
 import Link from 'next/link';
 import React from 'react';
