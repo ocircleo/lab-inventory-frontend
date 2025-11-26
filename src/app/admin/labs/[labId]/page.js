@@ -1,9 +1,9 @@
 import API from "@/app/_components/API";
+import LabDetail from "@/app/_components/lab/LabDetail";
+import LabForm from "@/app/_components/lab/LabForm";
+import LabTitle from "@/app/_components/lab/LabTitle";
 import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import { cookies } from "next/headers";
-import LabForm from "../../_components/lab/LabForm";
-import LabDetail from "./LabDetail";
-import LabTitle from "../../_components/lab/LabTitle";
 
 const Page = async ({ params }) => {
   try {

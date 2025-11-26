@@ -2,7 +2,6 @@
 import API from '@/app/_components/API';
 import fetchWithTimeOut from '@/app/_components/fetchwithtimeout/fetchWithTimeOut';
 import { useRouter } from 'next/navigation';
-import Alert from '../UserDetaill/detaill';
 /**
  * 
  * @param preData {type:"string"[add,any],data:{_id,...}} 

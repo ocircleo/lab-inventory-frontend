@@ -14,7 +14,8 @@ export const middleware = async (request) => {
 };
 
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*", "/staff/:path*"],
+  matcher: ["/user/:path*"]
+  // matcher: ["/admin/:path*", "/user/:path*", "/staff/:path*"],/
 };
 
 async function userValidation(path, cookie) {

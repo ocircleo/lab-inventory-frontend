@@ -13,7 +13,7 @@ const dashboardLinks = [
 
     {
         label: "MY Labs",
-        href: "/staff/my-labs",
+        href: "/staff/labs",
         description: "All Labs",
     },
     {

@@ -11,9 +11,9 @@ const TemplateComponent = () => {
     const boxRef = useRef(null);
 
     // Create new element
-    const createElement = (type) => {
+    const createElement = (dataType) => {
         const id = Date.now();
-        const newElement = { id, key: "", value: "", type };
+        const newElement = { id, key: "", value: "", dataType: dataType, type: "component" };
         setFormData((prev) => [...prev, newElement]);
         setShow(false);
     };
@@ -42,15 +42,14 @@ const TemplateComponent = () => {
         let form = e.target;
         let submitButton = form.submitButton
         let category, dataModel;
-
         category = form.temName.value;
         dataModel = formData;
+        dataModel.map(ele => form[`${ele.id}-type`] ? ele.type = form[`${ele.id}-type`]?.value : ele.type = "component")
         const data = { category, dataModel }
-
         submitButton.disabled = true;
         submitButton.innerText = "Adding...";
         setLoading(true);
-       
+
         const result = await addTemplate(data)
 
         submitButton.disabled = false;
@@ -94,7 +93,7 @@ const TemplateComponent = () => {
                     >
                         <p>Template Field: {index + 1}</p>
 
-                        {ele.type !== "description" ? (
+                        {ele.dataType !== "description" ? (
                             <fieldset className="flex flex-col md:flex-row gap-2">
                                 <input
                                     required
@@ -107,14 +106,18 @@ const TemplateComponent = () => {
                                 />
 
                                 <input
-                                    type={ele.type === "number" ? "number" : "text"}
+                                    datatype={ele.dataType === "number" ? "number" : "text"}
                                     name={`${ele.id}-value`}
                                     value={ele.value}
                                     onChange={updateData}
                                     placeholder="Value"
                                     className="p-2 bg-base-300 w-full"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -124,7 +127,7 @@ const TemplateComponent = () => {
                                 </button>
                             </fieldset>
                         ) : (
-                            <>
+                            <fieldset className="flex flex-col w-full lg:w-1/2 gap-2">
                                 <input
                                     required
                                     name={`${ele.id}-key`}
@@ -142,7 +145,11 @@ const TemplateComponent = () => {
                                     placeholder="Description"
                                     className="p-2 bg-base-300"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -150,7 +157,7 @@ const TemplateComponent = () => {
                                 >
                                     Delete
                                 </button>
-                            </>
+                            </fieldset>
                         )}
                     </div>
                 ))}

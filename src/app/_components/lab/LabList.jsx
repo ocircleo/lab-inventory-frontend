@@ -1,16 +1,12 @@
-
-import Alert from "@/app/_components/alert/Alert";
-import API from "@/app/_components/API";
 import Link from "next/link";
-import React, { useState } from "react";
-import Swal from "sweetalert2";
 
-const LabList = ({ data, refresh }) => {
+
+const LabList = ({ data, type }) => {
 
     return (
         <div className="flex flex-col gap-2">
             {data?.length == 0 ? (
-                <p>No Template data found, try other name please</p>
+                <p>No data found, try again please</p>
             ) : (
                 ""
             )}
@@ -21,7 +17,7 @@ const LabList = ({ data, refresh }) => {
                     <div className="bg-base-300 py-2 px-2 col-span-6 md:col-span-3">Dept. {ele.dept}</div>
                     <div className=" py-2 px-2 col-span-6 md:col-span-3">{ele.type}</div>
 
-                    <Link href={`/admin/labs/${ele._id}`} className="text-custom-blue underline underline-offset-4 font-semibold italic py-2 px-2 col-span-6 md:col-span-3">
+                    <Link href={`/${type}/labs/${ele._id}`} className="text-custom-blue underline underline-offset-4 font-semibold italic py-2 px-2 col-span-6 md:col-span-3">
                         Edit Lab
                     </Link>
                 </div>

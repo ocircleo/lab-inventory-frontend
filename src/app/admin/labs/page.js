@@ -1,7 +1,7 @@
 "use client";
 import API from "@/app/_components/API";
 import React, { useEffect, useRef, useState } from "react";
-import LabList from "./LabList";
+import LabList from "../../_components/lab/LabList";
 
 const Page = () => {
   const [data, setData] = useState([]);
@@ -14,10 +14,10 @@ const Page = () => {
     let inputValue = form.temName.value;
     clearTimeout(timeOut);
     timeOut = setTimeout(() => {
-      fetchTemplateData(inputValue);
+      fetchLabsData(inputValue);
     }, 400);
   };
-  const fetchTemplateData = async (text) => {
+  const fetchLabsData = async (text) => {
     if (text.length == 0) return setData([]);
     try {
       setLoading(true);
@@ -32,7 +32,7 @@ const Page = () => {
     }
   };
   useEffect(() => {
-    fetchTemplateData("@all");
+    fetchLabsData("@all");
   }, []);
   return (
     <div className="p-6">
@@ -61,7 +61,7 @@ const Page = () => {
       >
         Loading...
       </p>
-      {<LabList refresh={searchLabs} data={data} />}
+      {<LabList refresh={searchLabs} data={data} type={"admin"}/>}
     </div>
   );
 };

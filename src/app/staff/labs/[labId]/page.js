@@ -1,8 +1,8 @@
 import API from "@/app/_components/API";
 import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import { cookies } from "next/headers";
-import AddDeviceForm from "./AddDeviceForm";
-import LabTitle from "@/app/_components/lab/LabTitle";
+import LabTitle from "../../../_components/lab/LabTitle";
+import LabItems from "@/app/_components/lab/LabItems";
 
 const Page = async ({ params }) => {
   try {
@@ -13,26 +13,25 @@ const Page = async ({ params }) => {
     });
     const res = await req.json();
     const data = await res.data;
-
-    if (!res?.success)
+    if (!res.success)
       return (
         <div className="p-6">
-          <h1 className="text-2xl font-bold mb-6">Add Device</h1>
+          <h1 className="text-2xl font-bold mb-6">Lab Detail</h1>
           <NoDataFound message={"No Data Found"}></NoDataFound>
         </div>
       );
     return (
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">Add Device</h1>
+        <h1 className="text-2xl font-bold mb-6">Lab Detail</h1>
         <LabTitle data={data} />
-        <AddDeviceForm data={data} />
+        <LabItems data={data} />
       </div>
     );
   } catch (error) {
     console.log(error);
     return (
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">Add Device</h1>
+        <h1 className="text-2xl font-bold mb-6">Lab Detail</h1>
         <NoDataFound
           message={"Some Error Happened while Loading the data"}
         ></NoDataFound>

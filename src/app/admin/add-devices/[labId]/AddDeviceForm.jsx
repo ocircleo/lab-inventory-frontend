@@ -62,7 +62,7 @@ const AddDeviceForm = ({ data }) => {
 
             const dataArray = [...formData, ...prevData];
             let requestData = { name: itemName, category: category, majorComponents: dataArray, labId: data._id, itemCount }
-          
+
             setLoading(true);
             const req = await fetch(`${API}/admin/addDevice`, {
                 method: "POST",
@@ -150,7 +150,11 @@ const AddDeviceForm = ({ data }) => {
                                     placeholder="Value"
                                     className="p-2 bg-base-300 w-full"
                                 />
-
+                                <select name={`${ele.id}-type`} defaultValue={ele.type} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -160,7 +164,7 @@ const AddDeviceForm = ({ data }) => {
                                 </button>
                             </fieldset>
                         ) : (
-                            <>
+                            <fieldset className="flex flex-col w-full lg:w-1/2 gap-2">
                                 <input
                                     required
                                     name={`${ele.id}-key`}
@@ -178,7 +182,11 @@ const AddDeviceForm = ({ data }) => {
                                     placeholder="Description"
                                     className="p-2 bg-base-300"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -186,7 +194,7 @@ const AddDeviceForm = ({ data }) => {
                                 >
                                     Delete
                                 </button>
-                            </>
+                            </fieldset>
                         )}
                     </div>
                 ))}
@@ -222,7 +230,11 @@ const AddDeviceForm = ({ data }) => {
                                     placeholder="Value"
                                     className="p-2 bg-base-300 w-full"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -232,7 +244,7 @@ const AddDeviceForm = ({ data }) => {
                                 </button>
                             </fieldset>
                         ) : (
-                            <>
+                            <fieldset className="flex flex-col w-full lg:w-1/2 gap-2">
                                 <input
                                     required
                                     name={`${ele.id}-key`}
@@ -250,7 +262,11 @@ const AddDeviceForm = ({ data }) => {
                                     placeholder="Description"
                                     className="p-2 bg-base-300"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -258,16 +274,16 @@ const AddDeviceForm = ({ data }) => {
                                 >
                                     Delete
                                 </button>
-                            </>
+                            </fieldset>
                         )}
                     </div>
                 ))}
 
                 <div className='flex gap-3 my-10'>
-                    {template._id ? <>
-                        <input type="number" name='itemCount' min={1} defaultValue={1} placeholder='No of Item' className='bg-base-300 border-gray-500 border-2 p-1 rounded ' />
-                        <button type='submit' name='submitButton' className='btn bg-custom-blue inline-block text-white'>Add Item </button>
-                    </> : <p className='font-semibold text-orange-500'>Please Select an template first</p>}
+
+                    <input type="number" name='itemCount' min={1} defaultValue={1} placeholder='No of Item' className='bg-base-300 border-gray-500 border-2 p-1 rounded ' />
+                    <button type='submit' name='submitButton' className='btn bg-custom-blue inline-block text-white'>Add Item </button>
+
 
 
 

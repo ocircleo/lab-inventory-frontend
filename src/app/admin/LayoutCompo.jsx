@@ -30,6 +30,11 @@ const dashboardLinks = [
         href: "/admin/add-template",
     },
     {
+        label: "User Management",
+        href: "/admin/users",
+        description: "Manage search Logs"
+    },
+    {
         label: "Logs",
         href: "/admin/logs",
         description: "Manage search Logs"

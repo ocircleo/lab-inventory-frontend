@@ -15,9 +15,9 @@ const TemplateUpdateComponent = ({ data }) => {
     const router = useRouter()
 
     // Create new element
-    const createElement = (type) => {
+    const createElement = (dataType) => {
         const id = Date.now();
-        const newElement = { id, key: "", value: "", type };
+        const newElement = { id, key: "", value: "", dataType: dataType, type: "component" };
         setFormData((prev) => [...prev, newElement]);
         setShow(false);
     };
@@ -60,7 +60,9 @@ const TemplateUpdateComponent = ({ data }) => {
 
         category = form.temName.value;
         dataModel = [...formData, ...prevData];
+        dataModel.map(ele => form[`${ele.id}-type`] ? ele.type = form[`${ele.id}-type`]?.value : ele.type = "component")
         const newData = dataModel;
+        return console.log(newData);
         submitButton.disabled = true;
         submitButton.innerText = "Updating...";
         setLoading(true);
@@ -113,12 +115,12 @@ const TemplateUpdateComponent = ({ data }) => {
                 {prevData.map((ele, index) => (
                     <div
                         key={ele.id}
-                        className={`col-span-2 ${ele.type === "description" ? "lg:col-span-1" : ""
+                        className={`col-span-2 ${ele.datType === "description" ? "lg:col-span-1" : ""
                             } flex flex-col gap-2`}
                     >
                         <p>Template Field: {index + 1}</p>
 
-                        {ele.type !== "description" ? (
+                        {ele.datType !== "description" ? (
                             <fieldset className="flex flex-col md:flex-row gap-2">
                                 <input
                                     required
@@ -131,14 +133,18 @@ const TemplateUpdateComponent = ({ data }) => {
                                 />
 
                                 <input
-                                    type={ele.type === "number" ? "number" : "text"}
+                                    type={ele.datType === "number" ? "number" : "text"}
                                     name={`${ele.id}-value`}
                                     value={ele.value}
                                     onChange={updatePrevData}
                                     placeholder="Value"
                                     className="p-2 bg-base-300 w-full"
                                 />
-
+                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
+                                    <option value="component">Component</option>
+                                    <option value="device">Device</option>
+                                    <option value="data">Data</option>
+                                </select>
                                 <button
                                     type="button"
                                     className="btn bg-red-600"
@@ -185,12 +191,12 @@ const TemplateUpdateComponent = ({ data }) => {
                 {formData.map((ele, index) => (
                     <div
                         key={ele.id}
-                        className={`col-span-2 ${ele.type === "description" ? "lg:col-span-1" : ""
+                        className={`col-span-2 ${ele.datType === "description" ? "lg:col-span-1" : ""
                             } flex flex-col gap-2`}
                     >
                         <p>Template Field: {index + 1} (new)</p>
 
-                        {ele.type !== "description" ? (
+                        {ele.datType !== "description" ? (
                             <fieldset className="flex flex-col md:flex-row gap-2">
                                 <input
                                     required
@@ -203,7 +209,7 @@ const TemplateUpdateComponent = ({ data }) => {
                                 />
 
                                 <input
-                                    type={ele.type === "number" ? "number" : "text"}
+                                    type={ele.datType === "number" ? "number" : "text"}
                                     name={`${ele.id}-value`}
                                     value={ele.value}
                                     onChange={updateData}

@@ -142,7 +142,7 @@ const MainCompo = ({ data }) => {
                         <LabCompo setLab={setLab} selectedLab={selectedLab} />
                     </div>
                     <div className={`min-h-96 bg-base-200 duration-500  shrink-0 ${tab == "users" ? "w-full -translate-x-full" : tab == "labs" ? "w-full " : "w-1/2"} `}>
-                        <UsersCompo selectedLab={selectedLab} setUser={setUser} user={user}  />
+                        <UsersCompo selectedLab={selectedLab} setUser={setUser} user={user} />
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ const LabItems = ({ data }) => {
     }
     return (<><div className="relative" id="main">
         <Filter items={items} clearFilter={clearFilter} filterItems={filterItems} setPrint={setPrint} />
-        <div className='grid grid-cols-6 gap-3 mt-4'>
+        <div className='flex flex-col gap-2 mt-4'>
             {items?.map((ele, index) => <SingleItem ele={ele} key={ele._id} index={index} />)}
         </div>
 

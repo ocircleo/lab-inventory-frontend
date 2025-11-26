@@ -1,48 +1,103 @@
-import Users from "./Users";
-import Form from "./Form";
-import { Suspense } from "react";
-//*** important --------- make an query validator function for queries in utls folder and use it everywhere */
-//*** important --------- make an fetch function for get in order to ski writing try catch block every time  */
-const Page = async ({ searchParams }) => {
-  
-  const allSearchParams = await searchParams;
-  const page = allSearchParams.page || 1;
+"use client";
+import API from "@/app/_components/API";
+import React, { useEffect, useRef, useState } from "react";
+import SingleUser from "./SingleUser";
 
-  let query = "?";
-  for (const key in allSearchParams) {
-    if (query !== "?") query += "&";
-    query += `${key}=${allSearchParams[key]}`;
-  }
+const Page = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef(null);
 
-  //loads the total number of users
-  //based on the numbers of it loads the pagination
-  return (
-    <div className="p-2">
-      <h1 className="text-2xl font-bold mb-4">Search and Manage Users</h1>
-
-      <Form queries={allSearchParams} />
-      <p className="py-2 text-xl font-semibold">
-        Users List Page: <span className="text-blue-600"> {page}</span>
-      </p>
-      <Suspense
-        fallback={
-          <div>
-            <p>Loading users...</p>
-          </div>
+  let timeOut;
+  const searchLabs = (e) => {
+    e.preventDefault();
+    let form = formRef.current;
+    let inputValue = form.email.value;
+    let role = form.role.value;
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
+      fetchUsersData(inputValue, role);
+    }, 400);
+  };
+  const fetchUsersData = async (text, role) => {
+    if (text.length == 0) text = "@all";
+    try {
+      setLoading(true);
+      const req = await fetch(
+        `${API}/common/searchUserWithFilter?user=${text}&role=${role}`,
+        {
+          method: "GET",
+          credentials: "include",
         }
+      );
+      const result = await req.json();
+  
+      setLoading(false);
+      setData(result?.data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchUsersData("@all", "@all");
+  }, []);
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Search Users</h1>
+      <form
+        ref={formRef}
+        onSubmit={searchLabs}
+        className="flex justify-between gap-12 bg-base-300 p-2"
       >
-        <Users query={query}></Users>
-      </Suspense>
+        <fieldset className="w-full">
+          <input
+            onChange={searchLabs}
+            name="email"
+            type="text"
+            id="email"
+            defaultValue={"@all"}
+            className="p-2 border-0 bg-base-100  placeholder:text-light-gray  focus:outline-0 w-full"
+            placeholder="Email Address"
+          />
+        </fieldset>
+        <fieldset className="select select-neutral w-36 outline-0 focus:outline-0 shrink-0">
+          <select
+            name="role"
+            id="role"
+            onChange={searchLabs}
+            className="bg-base-300 outline-0 focus:outline-0"
+          >
+            <option value={"@all"}>All</option>
+            <option value={"admin"}>Admin</option>
+            <option value={"staff"}>Staff</option>
+            <option value={"user"}>User</option>
+          </select>
+        </fieldset>
+      </form>
+      <p
+        className={`text-xs font-semibold ${
+          loading ? "visible" : "invisible"
+        } p-1 `}
+      >
+        Loading...
+      </p>
+      <div className="flex flex-col gap-1">
+        {data?.map((ele, index) => (
+          <SingleUser
+            searchLabs={searchLabs}
+            key={ele._id}
+            index={index}
+            data={ele}
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
 export default Page;
 
-/* need a searchbar with filters <Component/>
-            list of users with pagination  <Component/>
-            each user has a view details button {children}
-            on clicking view details it opens a modal with user details and options to change role, delete user etc.{children}
-            need pagination at the bottom  <Component/>
-            */
-//pagination will be based on path query ?page=1&limit=10 not state
+//form
+//load data
+//
