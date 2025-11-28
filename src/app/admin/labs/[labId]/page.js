@@ -14,6 +14,7 @@ const Page = async ({ params }) => {
     });
     const res = await req.json();
     const data = await res.data;
+    // console.log(data);
     if (!res.success)
       return (
         <div className="p-6">

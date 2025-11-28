@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import SearchTemplate from './SearchTemplate';
 import Alert from '@/app/_components/alert/Alert';
 import API from '@/app/_components/API';
+import KeyValue from '@/app/_components/KeyValue/KeyValue';
 
 const AddDeviceForm = ({ data }) => {
     const [template, setTemplate] = useState({})
@@ -13,9 +14,9 @@ const AddDeviceForm = ({ data }) => {
     const [show, setShow] = useState(false);
     // Close dropdown if clicked outside
     // Create new element
-    const createElement = (type) => {
+    const createElement = (dataType) => {
         const id = Date.now();
-        const newElement = { id, key: "", value: "", type };
+        const newElement = { id, key: "", value: "", dataType: dataType, type: "component" };
         setFormData((prev) => [...prev, newElement]);
         setShow(false);
     };
@@ -40,10 +41,9 @@ const AddDeviceForm = ({ data }) => {
     const updateData = (e) => {
         const [id, field] = e.target.name.split("-");
         let value = e.target.value;
+        console.log("new form data: ", field, value);
 
-        setFormData((prev) =>
-            prev.map((ele) => (ele.id == id ? { ...ele, [field]: value } : ele))
-        );
+        setFormData((prev) => prev.map((ele) => (ele.id == id ? { ...ele, [field]: value } : ele)));
     };
     const submitForm = async (e) => {
         try {
@@ -53,16 +53,15 @@ const AddDeviceForm = ({ data }) => {
             if (loading) return
             let form = e.target;
             let submitButton = form.submitButton
-            let itemCount = form.itemCount.value;
             let itemName = form.itemName.value;
-            let category = form.category.value;
-            // submitButton.disabled = true;
-            // submitButton.innerText = "Adding...";
+            let category = "item";
+            submitButton.disabled = true;
+            submitButton.innerText = "Adding...";
 
 
             const dataArray = [...formData, ...prevData];
-            let requestData = { name: itemName, category: category, majorComponents: dataArray, labId: data._id, itemCount }
-
+            dataArray.map(ele => form[`${ele.id}-type`] ? ele.type = form[`${ele.id}-type`]?.value : ele.type = "component")
+            let requestData = { name: itemName, category: category, majorComponents: dataArray, labId: data._id }
             setLoading(true);
             const req = await fetch(`${API}/admin/addDevice`, {
                 method: "POST",
@@ -71,7 +70,6 @@ const AddDeviceForm = ({ data }) => {
                 credentials: "include"
             })
             const res = await req.json()
-            console.log(res);
             submitButton.disabled = false;
             submitButton.innerText = "Add Item";
             setLoading(false)
@@ -108,180 +106,22 @@ const AddDeviceForm = ({ data }) => {
                         className="p-2 bg-base-300 w-full"
                     />
                 </fieldset>
-                <fieldset className="flex flex-col  gap-2 mb-3">
-                    <label htmlFor={"category"} className='capitalize font-semibold text-custom-blue'>Category Name</label>
-                    <input
-                        type={"text"}
-                        name={`category`}
-                        placeholder="category Name"
-                        defaultValue={template?.category}
-                        required
-                        className="p-2 bg-base-300 w-full"
-                    />
-                </fieldset>
+
                 <fieldset className="col-span-2 pb-2 border-b-2 border-dashed">
                     <p className="font-semibold">Template Data</p>
                 </fieldset>
-                {prevData.map((ele, index) => (
-                    <div
-                        key={ele.id}
-                        className={`col-span-2 ${ele.type === "description" ? "lg:col-span-1" : ""
-                            } flex flex-col gap-2`}
-                    >
-                        <p>Template Field: {index + 1}</p>
 
-                        {ele.type !== "description" ? (
-                            <fieldset className="flex flex-col md:flex-row gap-2">
-                                <input
-                                    required
-                                    type="text"
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updatePrevData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300 w-full"
-                                />
+                {prevData.map((ele, index) => <KeyValue key={ele.id} ele={ele} index={index} title={"Template"} deleteElement={deletePrevElement} updateData={updatePrevData} />)}
 
-                                <input
-                                    type={ele.type === "number" ? "number" : "text"}
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updatePrevData}
-                                    placeholder="Value"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-                                <select name={`${ele.id}-type`} defaultValue={ele.type} className="select select-neutral w-36 outline-0 focus:outline-0">
-                                    <option value="component">Component</option>
-                                    <option value="device">Device</option>
-                                    <option value="data">Data</option>
-                                </select>
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deletePrevElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        ) : (
-                            <fieldset className="flex flex-col w-full lg:w-1/2 gap-2">
-                                <input
-                                    required
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updatePrevData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <textarea
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updatePrevData}
-                                    rows={4}
-                                    placeholder="Description"
-                                    className="p-2 bg-base-300"
-                                />
-                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
-                                    <option value="component">Component</option>
-                                    <option value="device">Device</option>
-                                    <option value="data">Data</option>
-                                </select>
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deletePrevElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        )}
-                    </div>
-                ))}
                 <fieldset className="col-span-2 border-b-2 border-dashed pb-2">
                     <p className="font-semibold">Form Data</p>
                 </fieldset>
 
-                {formData.map((ele, index) => (
-                    <div
-                        key={ele.id}
-                        className={`col-span-2 ${ele.type === "description" ? "lg:col-span-1" : ""
-                            } flex flex-col gap-2`}
-                    >
-                        <p>Template Field: {index + 1} (new)</p>
-
-                        {ele.type !== "description" ? (
-                            <fieldset className="flex flex-col md:flex-row gap-2">
-                                <input
-                                    required
-                                    type="text"
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updateData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-
-                                <input
-                                    type={ele.type === "number" ? "number" : "text"}
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updateData}
-                                    placeholder="Value"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
-                                    <option value="component">Component</option>
-                                    <option value="device">Device</option>
-                                    <option value="data">Data</option>
-                                </select>
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deleteElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        ) : (
-                            <fieldset className="flex flex-col w-full lg:w-1/2 gap-2">
-                                <input
-                                    required
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updateData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <textarea
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updateData}
-                                    rows={4}
-                                    placeholder="Description"
-                                    className="p-2 bg-base-300"
-                                />
-                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
-                                    <option value="component">Component</option>
-                                    <option value="device">Device</option>
-                                    <option value="data">Data</option>
-                                </select>
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deleteElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        )}
-                    </div>
-                ))}
+                {formData.map((ele, index) => (<KeyValue key={ele.id} ele={ele} index={index} title={"Item"} deleteElement={deleteElement} updateData={updateData} />))}
 
                 <div className='flex gap-3 my-10'>
 
-                    <input type="number" name='itemCount' min={1} defaultValue={1} placeholder='No of Item' className='bg-base-300 border-gray-500 border-2 p-1 rounded ' />
+
                     <button type='submit' name='submitButton' className='btn bg-custom-blue inline-block text-white'>Add Item </button>
 
 

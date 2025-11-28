@@ -1,7 +1,9 @@
 "use client";
 import API from "@/app/_components/API";
+import LabList from "@/app/_components/lab/LabList";
 import React, { useEffect, useRef, useState } from "react";
-import LabList from "../../_components/lab/LabList";
+
+
 
 const Page = () => {
   const [data, setData] = useState([]);
@@ -24,9 +26,8 @@ const Page = () => {
 
       const req = await fetch(`${API}/common/searchLab?lab=${text}`);
       const result = await req.json();
-
       setLoading(false);
-      setData(result.data);
+      setData(result?.data || []);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +62,7 @@ const Page = () => {
       >
         Loading...
       </p>
-      {<LabList refresh={searchLabs} data={data} type={"admin"}/>}
+      {<LabList data={data}></LabList>}
     </div>
   );
 };

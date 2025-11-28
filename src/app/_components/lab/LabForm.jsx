@@ -2,6 +2,7 @@
 import API from '@/app/_components/API';
 import fetchWithTimeOut from '@/app/_components/fetchwithtimeout/fetchWithTimeOut';
 import { useRouter } from 'next/navigation';
+import Alert from '../alert/Alert';
 /**
  * 
  * @param preData {type:"string"[add,any],data:{_id,...}} 
@@ -39,9 +40,9 @@ const LabForm = ({ preData }) => {
             submitButton.innerText = "Add Lab";
 
             if (result.success) {
-                router.push("/edit-lab/" + result.data._id);
+                router.push("/admin/edit-lab/" + result.data._id);
             } else {
-                Alert("error", "Error adding Lab: " + result.message);
+                Alert("error", "Error : " + result.message);
             }
         } else {
             submitButton.innerText = "Updating...";

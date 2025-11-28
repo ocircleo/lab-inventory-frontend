@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import LabItems from './LabItems';
 
-const LabDetail = ({ data }) => {
+const LabDetail =  ({ data }) => {
 
     return (
         <div className='mt-12 border-t-2 border-dashed pt-6'>
@@ -20,7 +20,7 @@ const LabDetail = ({ data }) => {
                     <Link href={`/admin/assign-users?lab=${data._id}`} className='bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded'>Manage Staffs</Link>
                 </div>
             </div>
-            <LabItems data={data} />
+            <LabItems  data={data} />
         </div>
     );
 }

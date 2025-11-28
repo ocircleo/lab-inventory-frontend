@@ -1,6 +1,6 @@
+import LabForm from "@/app/_components/lab/LabForm";
 import React from "react";
-import CourseForm from "../_components/CourseComponent/CourseForm";
-import LabForm from "../_components/lab/LabForm.jsx";
+
 
 const Page = () => {
   return (

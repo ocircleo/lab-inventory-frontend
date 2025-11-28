@@ -2,6 +2,7 @@
 import Alert from "@/app/_components/alert/Alert";
 import API from "@/app/_components/API";
 import fetchWithTimeOut from "@/app/_components/fetchwithtimeout/fetchWithTimeOut";
+import KeyValue from "@/app/_components/KeyValue/KeyValue";
 import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -62,7 +63,6 @@ const TemplateUpdateComponent = ({ data }) => {
         dataModel = [...formData, ...prevData];
         dataModel.map(ele => form[`${ele.id}-type`] ? ele.type = form[`${ele.id}-type`]?.value : ele.type = "component")
         const newData = dataModel;
-        return console.log(newData);
         submitButton.disabled = true;
         submitButton.innerText = "Updating...";
         setLoading(true);
@@ -112,150 +112,12 @@ const TemplateUpdateComponent = ({ data }) => {
                 <fieldset className="col-span-2 pb-2 border-b-2 border-dashed">
                     <p className="font-semibold">Template Data</p>
                 </fieldset>
-                {prevData.map((ele, index) => (
-                    <div
-                        key={ele.id}
-                        className={`col-span-2 ${ele.datType === "description" ? "lg:col-span-1" : ""
-                            } flex flex-col gap-2`}
-                    >
-                        <p>Template Field: {index + 1}</p>
-
-                        {ele.datType !== "description" ? (
-                            <fieldset className="flex flex-col md:flex-row gap-2">
-                                <input
-                                    required
-                                    type="text"
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updatePrevData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-
-                                <input
-                                    type={ele.datType === "number" ? "number" : "text"}
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updatePrevData}
-                                    placeholder="Value"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-                                <select name={`${ele.id}-type`} className="select select-neutral w-36 outline-0 focus:outline-0">
-                                    <option value="component">Component</option>
-                                    <option value="device">Device</option>
-                                    <option value="data">Data</option>
-                                </select>
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deletePrevElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        ) : (
-                            <>
-                                <input
-                                    required
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updatePrevData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <textarea
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updatePrevData}
-                                    rows={4}
-                                    placeholder="Description"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deletePrevElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </>
-                        )}
-                    </div>
-                ))}
+                {prevData.map((ele, index) => <KeyValue key={ele.id} ele={ele} index={index} title={"Template"} deleteElement={deletePrevElement} updateData={updatePrevData} />)}
                 <fieldset className="col-span-2 border-b-2 border-dashed pb-2">
                     <p className="font-semibold">Form Data</p>
                 </fieldset>
 
-                {formData.map((ele, index) => (
-                    <div
-                        key={ele.id}
-                        className={`col-span-2 ${ele.datType === "description" ? "lg:col-span-1" : ""
-                            } flex flex-col gap-2`}
-                    >
-                        <p>Template Field: {index + 1} (new)</p>
-
-                        {ele.datType !== "description" ? (
-                            <fieldset className="flex flex-col md:flex-row gap-2">
-                                <input
-                                    required
-                                    type="text"
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updateData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-
-                                <input
-                                    type={ele.datType === "number" ? "number" : "text"}
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updateData}
-                                    placeholder="Value"
-                                    className="p-2 bg-base-300 w-full"
-                                />
-
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deleteElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </fieldset>
-                        ) : (
-                            <>
-                                <input
-                                    required
-                                    name={`${ele.id}-key`}
-                                    value={ele.key}
-                                    onChange={updateData}
-                                    placeholder="Key"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <textarea
-                                    name={`${ele.id}-value`}
-                                    value={ele.value}
-                                    onChange={updateData}
-                                    rows={4}
-                                    placeholder="Description"
-                                    className="p-2 bg-base-300"
-                                />
-
-                                <button
-                                    type="button"
-                                    className="btn bg-red-600"
-                                    onClick={() => deleteElement(ele.id)}
-                                >
-                                    Delete
-                                </button>
-                            </>
-                        )}
-                    </div>
-                ))}
+                {formData.map((ele, index) => <KeyValue key={ele.id} ele={ele} index={index} title={"Template"} deleteElement={deleteElement} updateData={updateData} />)}
 
                 <div className="col-span-2   my-6">
                     <button

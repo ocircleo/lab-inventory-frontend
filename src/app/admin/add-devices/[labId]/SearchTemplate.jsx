@@ -26,6 +26,7 @@ const SearchTemplate = ({ setPrevData, setTemplate }) => {
 
             const req = await fetch(`${API}/common/searchTemplate?template=${text}`);
             const result = await req.json();
+            
             setLoading(false);
             setData(result?.data);
             if (result?.data?.length > 0) setShow(true)
