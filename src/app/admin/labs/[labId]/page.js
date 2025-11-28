@@ -1,4 +1,5 @@
 import API from "@/app/_components/API";
+import BackButton from "@/app/_components/BackButton/BackButton";
 import LabDetail from "@/app/_components/lab/LabDetail";
 import LabForm from "@/app/_components/lab/LabForm";
 import LabTitle from "@/app/_components/lab/LabTitle";
@@ -11,6 +12,7 @@ const Page = async ({ params }) => {
     const req = await fetch(`${API}/common/labs/${id}`, {
       method: "GET",
       headers: { Cookie: (await cookies()).toString() },
+      cache: "no-cache",
     });
     const res = await req.json();
     const data = await res.data;
@@ -19,12 +21,15 @@ const Page = async ({ params }) => {
       return (
         <div className="p-6">
           <h1 className="text-2xl font-bold mb-6">Edit Lab</h1>
+          <BackButton>Back To Previous Page</BackButton>
           <NoDataFound message={"No Data Found"}></NoDataFound>
         </div>
       );
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">Edit Lab</h1>
+        <BackButton>Back To Previous Page</BackButton>
+
         <LabTitle data={data} />
         <LabForm preData={{ type: "update", data }} />
         <LabDetail data={data} />
@@ -35,6 +40,8 @@ const Page = async ({ params }) => {
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">Lab</h1>
+        <BackButton>Back To Previous Page</BackButton>
+
         <NoDataFound
           message={"Some Error Happened while Loading the data"}
         ></NoDataFound>

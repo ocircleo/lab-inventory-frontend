@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MdMoveUp } from "react-icons/md";
+import UpdateFrom from "./UpdateFrom";
 
 const SingleItemComponents = ({ ele, index, selectAndSet }) => {
     console.log(ele);
@@ -46,6 +47,9 @@ const SingleItemComponents = ({ ele, index, selectAndSet }) => {
 
                     </div>
 
+                </div>
+                <div>
+                    <UpdateFrom type={"component"} id={ele._id} />
                 </div>
             </div>
         </div>

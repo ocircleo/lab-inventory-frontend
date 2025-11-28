@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdPrint } from "react-icons/md";
 import { RiResetLeftFill } from "react-icons/ri";
-const Filter = ({ items, clearFilter, filterItems, setPrint }) => {
+const Filter = ({ items, components, clearFilter, filterItems, setPrint }) => {
     const categoryRef = useRef(null)
     const [selected, setSelected] = useState([])
     const [category, setCategory] = useState([])
@@ -31,27 +31,41 @@ const Filter = ({ items, clearFilter, filterItems, setPrint }) => {
         setSelected(extraFilter)
     }
     useEffect(() => {
-        const categoryArray = []
-        const extraFilter = []
-        for (let i = 0; i < items.length; i++) {
-            if (!items[i]?.category) {
-                categoryArray.push("unknown")
+        const totalArray = [...items, ...components]
+        const itemArray = []
+        const extraFilterDevice = []
+        const extraFilterComponent = []
+        for (let i = 0; i < totalArray.length; i++) {
+            if (!totalArray[i]?.category) {
+                itemArray.push("unknown")
                 continue;
             }
-            if (categoryArray.includes(items[i]?.category)) continue;
-            categoryArray.push(items[i]?.category);
+            if (itemArray.includes(totalArray[i]?.category)) continue;
+            itemArray.push(totalArray[i]?.category);
         }
 
-        const defaultSelected = items?.filter(ele => ele?.category == categoryArray[0]);
+        const defaultSelected = totalArray?.filter(ele => ele?.category == itemArray[0]);
+
 
         for (let i = 0; i < defaultSelected.length; i++) {
-            let majorComponents = defaultSelected[i]?.majorComponents || [];
-            for (let i = 0; i < majorComponents.length; i++) {
-                if (extraFilter.includes(majorComponents[i]?.key)) continue;
-                extraFilter.push(majorComponents[i]?.key);
+            if (itemArray[0] == "item") {
+                let deviceList, componentList;
+                deviceList = defaultSelected[i].deviceList.map((ele) => {
+                    return { name: ele.name, value: ele.value, category: "item" }
+                });
+                componentList = defaultSelected[i].componentList.map((ele) => {
+                    return { name: ele.name, value: ele.value, category: "component" }
+                });
+                deviceList.forEach(ele => extraFilterDevice.includes(ele.key) ? null : extraFilterDevice.push(ele.name));
+                componentList.forEach(ele => extraFilterComponent.includes(ele.name) ? null : extraFilterComponent.push(ele.name));
+            } else {
+
             }
         }
-        setCategory(categoryArray)
+
+        const extraFilter = [...extraFilterDevice, ...extraFilterComponent]
+        console.log(extraFilter);
+        setCategory(itemArray)
         setSelected(extraFilter)
     }, [])
     return (
@@ -69,9 +83,9 @@ const Filter = ({ items, clearFilter, filterItems, setPrint }) => {
                         <option value="all">Not Selected</option>
                         {stateArray.map((ele, index) => <option key={"state-" + index} value={ele} className='capitalize cursor-pointer'>{ele}</option>)}
                     </select>
-                    <select name='subCategory' defaultValue="all" className="select select-neutral w-36 outline-0 focus:outline-0">
+                    {/* <select name='subCategory' defaultValue="all" className="select select-neutral w-36 outline-0 focus:outline-0">
                         <option value="all">Not Selected</option>
-                        {selected.map((ele, index) => <option key={"extra-" + ele} value={ele} className='capitalize cursor-pointer w-56'>{ele}</option>)}
+                        {selected.map((ele, index) => <option key={"extra-" + index} value={ele._id} className='capitalize cursor-pointer w-56'>{ele.name}</option>)}
                     </select>
 
                     <input
@@ -81,7 +95,7 @@ const Filter = ({ items, clearFilter, filterItems, setPrint }) => {
 
                         className="p-2 border-2 bg-base-300 placeholder:text-light-gray  focus:outline-0 w-60 border-gray-500 rounded"
                         placeholder="Extra filter"
-                    />
+                    /> */}
                 </div>
 
             </div>

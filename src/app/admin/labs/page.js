@@ -62,7 +62,7 @@ const Page = () => {
       >
         Loading...
       </p>
-      {<LabList data={data}></LabList>}
+      {<LabList data={data} type={"admin"}></LabList>}
     </div>
   );
 };

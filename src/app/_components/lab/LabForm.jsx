@@ -40,7 +40,7 @@ const LabForm = ({ preData }) => {
             submitButton.innerText = "Add Lab";
 
             if (result.success) {
-                router.push("/admin/edit-lab/" + result.data._id);
+                router.push("/admin/labs/" + result.data._id);
             } else {
                 Alert("error", "Error : " + result.message);
             }

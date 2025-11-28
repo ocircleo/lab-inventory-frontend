@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { MdMoveUp } from "react-icons/md";
+import UpdateFrom from "./UpdateFrom";
 
 const SingleItem = ({ ele, index, selectAndSet }) => {
     const [open, setOpen] = useState(false);
@@ -15,7 +16,7 @@ const SingleItem = ({ ele, index, selectAndSet }) => {
     function selectComponents(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        
+
         const selected = formData.getAll("component");
         let selectedItems = ele?.componentList.filter((component) =>
             selected.includes(component._id));
@@ -26,7 +27,7 @@ const SingleItem = ({ ele, index, selectAndSet }) => {
     function selectDevices(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        
+
         const selected = formData.getAll("item");
         let selectedItems = ele?.deviceList.filter((component) =>
             selected.includes(component._id));
@@ -130,6 +131,9 @@ const SingleItem = ({ ele, index, selectAndSet }) => {
                             {component?.key} : {component?.value}
                         </p>
                     ))}
+                </div>
+                <div>
+                    <UpdateFrom type={"item"} currentState={ele.currentState} id={ele._id}></UpdateFrom>
                 </div>
             </div>
         </div>

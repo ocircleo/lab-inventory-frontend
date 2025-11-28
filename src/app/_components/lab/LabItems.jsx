@@ -14,8 +14,6 @@ const LabItems = ({ data }) => {
     const [filter, setFilter] = useState({})
     const [selectedItems, setSelectedItems] = useState({ parentId: "", parentType: "", childType: "", items: [] })
     const selectAndSet = (selectionData) => {
-        console.log(selectionData);
-        console.log("Lab id: ", data._id);
 
         setSelectedItems({ parentId: selectionData.parentId == undefined ? data._id : selectionData.parentId, parentType: selectionData.parentType, items: selectionData.items, childType: selectionData.childType })
 
@@ -60,7 +58,7 @@ const LabItems = ({ data }) => {
 
     }
     return (<><div className="relative" id="main">
-        <Filter items={items} clearFilter={clearFilter} filterItems={filterItems} setPrint={setPrint} />
+        <Filter items={items} components={components} clearFilter={clearFilter} filterItems={filterItems} setPrint={setPrint} />
 
         <div className='flex flex-col gap-2 mt-4'>
             {items?.map((ele, index) => <SingleItem ele={ele} key={ele._id} index={index} selectAndSet={selectAndSet} />)}
