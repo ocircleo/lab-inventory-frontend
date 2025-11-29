@@ -1,23 +1,23 @@
-
-import { API_URL } from '@/config';
+import { API_URL } from "@/config";
 import React from 'react';
 import { GrStatusGood } from 'react-icons/gr';
 import { MdPendingActions } from 'react-icons/md';
 import { RxCrossCircled } from 'react-icons/rx';
 
-const CountItems = async () => {
+const CountComponents = async () => {
     let data;
     try {
-        const req = await fetch(`${API_URL}/common/countItems`)
+        const req = await fetch(`${API_URL}/common/countComponents`)
         const res = await req.json()
         data = res.data
     } catch (error) {
         console.log(error);
     }
-    return (<div className="flex flex-col gap-2 bg-base-300 pe-16 ps-5 py-3">
+    return <div className="flex flex-col gap-2 bg-base-300 pe-16 ps-5 py-3">
         <div className="flex gap-2 font-bold">
-            Total Items
-            <p>{data?.totalItems || 0}</p>
+            Total Component
+            <p>{data?.totalItems}</p>
+
         </div>
         <div className="flex  flex-col gap-1 mt-2">
             <div className="flex gap-2 items-center">
@@ -32,11 +32,12 @@ const CountItems = async () => {
             </div>
             <div className="flex gap-2 items-center">
                 <RxCrossCircled className="text-red-500 text-lg" />
+
                 <p>Broken</p>
                 <p>{data?.brokenItems || 0}</p>
             </div>
         </div>
-    </div>)
+    </div>
 }
 
-export default CountItems;
+export default CountComponents;

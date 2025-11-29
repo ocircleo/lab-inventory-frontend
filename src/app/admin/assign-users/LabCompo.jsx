@@ -1,7 +1,8 @@
 "use client";
-import API from "@/app/_components/API";
+
 import React, { useEffect, useRef, useState } from "react";
 import LabList from "./LabsList";
+import { API_URL } from "@/config";
 
 
 const LabCompo = ({ setLab, selectedLab }) => {
@@ -23,13 +24,15 @@ const LabCompo = ({ setLab, selectedLab }) => {
         try {
             setLoading(true);
 
-            const req = await fetch(`${API}/common/searchLab?lab=${text}`);
+            const req = await fetch(`${API_URL}/common/searchLab?lab=${text}`);
             const result = await req.json();
 
-            setLoading(false);
             setData(result.data);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
+
         }
     };
     useEffect(() => {

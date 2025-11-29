@@ -23,39 +23,27 @@ const LabItems = ({ data }) => {
     }
     const clearFilter = () => {
         setItems(data?.items || [])
+        setComponents(data?.components || [])
         setFilter({})
     }
-    const filterItems = (filterObj) => {
-        setFilter(filterObj)
-        let filteredElements = data?.items || [];
-
-
-        if (filterObj?.category != "all") {
-            console.log("category Selected");
-            let categoryFilteredElements = filteredElements?.filter(ele => ele?.category == filterObj?.category);
-            filteredElements = categoryFilteredElements;
+    const filterItems = (selectedCategory, selectedCurrentState) => {
+        let items = data?.items || []
+        let components = data?.components || []
+        let selectedItems = []
+        let selectedComponents = []
+        if (selectedCategory == "all") {
+            selectedItems = items;
+            selectedComponents = components;
+        } else {
+            selectedItems = items.filter(ele => ele.category == selectedCategory)
+            selectedComponents = components.filter(ele => ele.category == selectedCategory)
         }
-        if (filterObj.currentState != "all") {
-            console.log("current State Selected");
-            let stateFilteredElements = filteredElements.filter(ele => ele.currentState == filterObj?.currentState)
-            filteredElements = stateFilteredElements;
+        if (selectedCurrentState != "all") {
+            selectedItems = selectedItems.filter(ele => ele.currentState == selectedCurrentState)
+            selectedComponents = selectedComponents.filter(ele => ele.currentState == selectedCurrentState)
         }
-        if (filterObj.subCategory != "all") {
-            console.log("meow");
-            if (filterObj.filterText.length > 0) {
-                let resultArray = [];
-                for (let i = 0; i < filteredElements.length; i++) {
-                    let majorComponents = filteredElements[i]?.majorComponents || [];
-                    // console.log(majorComponents);
-                    let temKeyValue = majorComponents.find(ele => ele.key == filterObj?.subCategory)
-
-                    if (temKeyValue && includesText(filterObj.filterText, temKeyValue?.value)) resultArray.push(filteredElements[i])
-                }
-                filteredElements = resultArray;
-            }
-        }
-        setItems(filteredElements)
-
+        setItems(selectedItems)
+        setComponents(selectedComponents)
     }
     return (<><div className="relative" id="main">
         <Filter items={items} components={components} clearFilter={clearFilter} filterItems={filterItems} setPrint={setPrint} />

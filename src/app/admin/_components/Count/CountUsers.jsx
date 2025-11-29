@@ -1,9 +1,9 @@
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import React from 'react';
 
 const CountUsers = async ({ type = "all" }) => {
     try {
-        const req = await fetch(`${API}/common/countUsers?role=${type}`)
+        const req = await fetch(`${API_URL}/common/countUsers?role=${type}`)
         const res = await req.json()
         if (res?.data?.total) return <p>{res?.data?.total}</p>
         return <p>0</p>

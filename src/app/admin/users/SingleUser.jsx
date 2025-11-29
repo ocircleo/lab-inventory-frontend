@@ -1,5 +1,5 @@
 import Alert from '@/app/_components/alert/Alert';
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import React from 'react';
 
 const SingleUser = ({ index, data, searchLabs }) => {
@@ -8,14 +8,14 @@ const SingleUser = ({ index, data, searchLabs }) => {
             if (!data?._id) return Alert("error", "No User selected");
 
             const requestData = { staffId: data._id };
-            const req = await fetch(`${API}/admin/deleteStaff`, {
+            const req = await fetch(`${API_URL}/admin/deleteStaff`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify(requestData)
             })
             const res = await req.json();
-            console.log(res);
+           
             searchLabs({ preventDefault: () => { } });
             if (res.success) {
                 Alert("success", "User removed from Staff");
@@ -32,7 +32,7 @@ const SingleUser = ({ index, data, searchLabs }) => {
             if (!data?._id) return Alert("error", "No User selected");
 
             const requestData = { staffId: data._id };
-            const req = await fetch(`${API}/admin/makeStaff`, {
+            const req = await fetch(`${API_URL}/admin/makeStaff`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 credentials: "include",

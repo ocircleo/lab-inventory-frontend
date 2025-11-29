@@ -1,19 +1,19 @@
 import { cookies } from "next/headers";
-
-import API from "../_components/API";
+import { API_URL } from "@/config";
 import DefaultPage from "./DefaultPage";
 import LoggedHome from "../_components/LoggedHome/LoggedHome";
-
+export const dynamic = "force-dynamic";
 const Page = async () => {
   try {
     const cookie = (await cookies()).get("access_token")?.value;
     if (cookie) {
-      const req = await fetch(API + "/auth/login_with_token", {
+      const req = await fetch(API_URL + "/auth/login_with_token", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ token: cookie }),
       });
       const res = await req.json();
+
       if (res?.data?.email_address) return <LoggedHome user={res.data} />;
     }
     return <DefaultPage error={false} />;

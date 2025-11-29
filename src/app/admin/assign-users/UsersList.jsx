@@ -1,5 +1,5 @@
 import Alert from "@/app/_components/alert/Alert";
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 
 
 const UsersList = ({ reFetchExistingFormData, data, setUser, user, selectedLab }) => {
@@ -24,7 +24,7 @@ const UsersList = ({ reFetchExistingFormData, data, setUser, user, selectedLab }
     const removeItem = async (ele) => {
         try {
             const requestData = { labId: selectedLab._id, staffId: ele._id };
-            const req = await fetch(`${API}/admin/removeStaff`, {
+            const req = await fetch(`${API_URL}/admin/removeStaff`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 credentials: "include",

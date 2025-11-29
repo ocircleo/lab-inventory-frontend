@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import MovePageLabs from "./MovePageLabs";
-import API from "../API";
 import Alert from "../alert/Alert";
-import { useRouter } from "next/navigation";
+import { API_URL } from "@/config";
+import MoveToTrash from "./MoveToTrash";
 
 const MovePage = ({ selectedItems, closeMovePage }) => {
     const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ const MovePage = ({ selectedItems, closeMovePage }) => {
         if (text.length == 0) return setData([]);
         try {
             setLoading(true);
-            const req = await fetch(`${API}/common/searchLabToInsert?lab=${text}`);
+            const req = await fetch(`${API_URL}/common/searchLabToInsert?lab=${text}`);
             const result = await req.json();
             setLoading(false);
             setData(Array.isArray(result?.data) ? result?.data : []);
@@ -38,14 +38,14 @@ const MovePage = ({ selectedItems, closeMovePage }) => {
             setMoveLoading(true)
             const itemIds = selectedItems.items.map(ele => ele._id);
             const move = { moveTo: { id, type }, moveFrom: { id: selectedItems.parentId, type: selectedItems.parentType }, item: { id: itemIds, type: selectedItems.childType } }
-            const req = await fetch(`${API}/common/move-items`, {
+            const req = await fetch(`${API_URL}/common/move-items`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(move),
                 credentials: "include",
             })
             const result = await req.json()
-            console.log(result);
+
             if (result?.success) {
                 Alert("success", "Items moved successfully");
                 setMoveLoading(false);
@@ -96,7 +96,7 @@ const MovePage = ({ selectedItems, closeMovePage }) => {
                     <p className="py-1">{loading ? "Loading....." : ""}</p>
                 </form>
                 <div className="flex flex-col gap-2">
-
+                    <MoveToTrash selectedItems={selectedItems} setMoveLoading={setMoveLoading} moveLoading={moveLoading} />
                     {data.map((lab, index) => <MovePageLabs key={lab._id} lab={lab} index={index} moveLoading={moveLoading} moveTo={moveTo} />)}
                 </div>
 

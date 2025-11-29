@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SearchTemplate from './SearchTemplate';
 import Alert from '@/app/_components/alert/Alert';
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import KeyValue from '@/app/_components/KeyValue/KeyValue';
 
 const AddDeviceForm = ({ data }) => {
@@ -41,7 +41,6 @@ const AddDeviceForm = ({ data }) => {
     const updateData = (e) => {
         const [id, field] = e.target.name.split("-");
         let value = e.target.value;
-        console.log("new form data: ", field, value);
 
         setFormData((prev) => prev.map((ele) => (ele.id == id ? { ...ele, [field]: value } : ele)));
     };
@@ -63,7 +62,7 @@ const AddDeviceForm = ({ data }) => {
             dataArray.map(ele => form[`${ele.id}-type`] ? ele.type = form[`${ele.id}-type`]?.value : ele.type = "component")
             let requestData = { name: itemName, category: category, majorComponents: dataArray, labId: data._id }
             setLoading(true);
-            const req = await fetch(`${API}/admin/addDevice`, {
+            const req = await fetch(`${API_URL}/admin/addDevice`, {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(requestData),

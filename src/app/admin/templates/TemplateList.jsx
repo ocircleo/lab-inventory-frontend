@@ -1,5 +1,5 @@
 import Alert from '@/app/_components/alert/Alert';
-import API from '@/app/_components/API';
+import { API_URL} from "@/config";
 import Link from 'next/link';
 import React from 'react';
 import Swal from 'sweetalert2';
@@ -46,7 +46,7 @@ export default TemplateList;
 
 const deleteTemplate = async (id) => {
     try {
-        const req = await fetch(`${API}/admin/delete-template`, {
+        const req = await fetch(`${API_URL}/admin/delete-template`, {
             method: "DELETE",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ id }),

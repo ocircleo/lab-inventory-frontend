@@ -20,7 +20,7 @@ const LabDetail =  ({ data }) => {
                     <Link href={`/admin/assign-users?lab=${data._id}`} className='bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded'>Manage Staffs</Link>
                 </div>
             </div>
-            <LabItems  data={data} />
+            <LabItems data={data} />
         </div>
     );
 }

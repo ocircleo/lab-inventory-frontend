@@ -1,17 +1,17 @@
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import LabList from "../../_components/lab/LabList";
 import { cookies } from "next/headers";
-
+export const dynamic = "force-dynamic";
 const Page = async () => {
   let data = [];
   try {
-    const req = await fetch(`${API}/common/staffLabs`, {
+    const req = await fetch(`${API_URL}/common/staffLabs`, {
       method: "GET",
       headers: { Cookie: (await cookies()).toString() },
       credentials: "include",
     });
     const result = await req.json();
-    console.log(result);
+  
     data = result.data || [];
   } catch (error) {
     console.log(error);

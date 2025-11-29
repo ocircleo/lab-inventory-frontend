@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import API from "../_components/API";
+import { API_URL } from "@/config";
 
 const Page = () => {
   const router = useRouter();
   const clearCookies = async () => {
-    const res = await fetch(`${API}/auth/logout`, {
+    const res = await fetch(`${API_URL}/auth/logout`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

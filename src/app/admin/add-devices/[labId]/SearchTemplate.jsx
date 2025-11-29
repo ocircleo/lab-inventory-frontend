@@ -1,4 +1,4 @@
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import React, { useEffect, useRef, useState } from 'react';
 
 const SearchTemplate = ({ setPrevData, setTemplate }) => {
@@ -24,7 +24,7 @@ const SearchTemplate = ({ setPrevData, setTemplate }) => {
         try {
             setLoading(true);
 
-            const req = await fetch(`${API}/common/searchTemplate?template=${text}`);
+            const req = await fetch(`${API_URL}/common/searchTemplate?template=${text}`);
             const result = await req.json();
             
             setLoading(false);

@@ -1,12 +1,13 @@
-import API from "@/app/_components/API";
+
 import { cookies } from "next/headers";
 import MainCompo from "./MainCompo";
-
+import { API_URL } from "@/config";
+export const dynamic = "force-dynamic";
 const Page = async ({ searchParams }) => {
   let data;
   try {
     let id = (await searchParams).lab;
-    const req = await fetch(`${API}/common/labs/${id}`, {
+    const req = await fetch(`${API_URL}/common/labs/${id}`, {
       method: "GET",
       headers: { Cookie: (await cookies()).toString() },
     });

@@ -1,5 +1,5 @@
 "use client";
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import React, { useEffect, useRef, useState } from "react";
 import SingleUser from "./SingleUser";
 
@@ -24,18 +24,19 @@ const Page = () => {
     try {
       setLoading(true);
       const req = await fetch(
-        `${API}/common/searchUserWithFilter?user=${text}&role=${role}`,
+        `${API_URL}/common/searchUserWithFilter?user=${text}&role=${role}`,
         {
           method: "GET",
           credentials: "include",
         }
       );
       const result = await req.json();
-  
-      setLoading(false);
+
       setData(result?.data || []);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {

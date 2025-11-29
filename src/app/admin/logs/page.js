@@ -1,10 +1,10 @@
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import Link from "next/link";
 
 async function fetchLogs(page = 1, limit = 20) {
   try {
     const response = await fetch(
-      `${API}/common/logs?page=${page}&limit=${limit}`,
+      `${API_URL}/common/logs?page=${page}&limit=${limit}`,
       {
         cache: "no-store",
       }
@@ -27,7 +27,6 @@ export default async function Page({ searchParams }) {
 
   const result = await fetchLogs(page, limit);
   const logs = result.data.data || [];
-  console.log(logs);
   const totalPages = Math.ceil(result.data.totalItems / limit) || 1;
 
   const hasPrevious = page > 1;

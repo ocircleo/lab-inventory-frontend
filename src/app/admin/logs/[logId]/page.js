@@ -1,4 +1,4 @@
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import React, { Suspense } from "react";
 import Item from "./Item";
@@ -10,10 +10,10 @@ const Page = async ({ params }) => {
 
   let data;
   try {
-    const req = await fetch(`${API}/common/logs/${logId}`);
+    const req = await fetch(`${API_URL}/common/logs/${logId}`);
     const result = await req.json();
     data = result?.data || {};
-    console.log(data);
+  
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">Log Detail</h1>

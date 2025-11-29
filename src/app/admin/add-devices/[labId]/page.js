@@ -1,13 +1,13 @@
-import API from "@/app/_components/API";
 import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import { cookies } from "next/headers";
 import AddDeviceForm from "./AddDeviceForm";
 import LabTitle from "@/app/_components/lab/LabTitle";
+import { API_URL } from "@/config";
 
 const Page = async ({ params }) => {
   try {
     let id = (await params).labId;
-    const req = await fetch(`${API}/common/labs/${id}`, {
+    const req = await fetch(`${API_URL}/common/labs/${id}`, {
       method: "GET",
       headers: { Cookie: (await cookies()).toString() },
     });

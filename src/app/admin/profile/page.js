@@ -2,14 +2,14 @@ export const metadata = {
   title: "Profile",
   description: "View your profile information.",
 };
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import { cookies } from "next/headers";
-
+export const dynamic = "force-dynamic";
 const Page = async () => {
   try {
     const cookie = (await cookies()).get("access_token").value;
     if (cookie) {
-      const req = await fetch(API + "/auth/login_with_token", {
+      const req = await fetch(API_URL + "/auth/login_with_token", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ token: cookie }),

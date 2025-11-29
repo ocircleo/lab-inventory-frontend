@@ -1,7 +1,8 @@
 "use client";
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import React, { useEffect, useRef, useState } from "react";
 import UsersList from "./UsersList";
+
 
 
 
@@ -23,13 +24,13 @@ const userCompo = ({ user, setUser, selectedLab }) => {
         if (text?.length == 0) return setData([]);
         try {
             setLoading(true);
-
-            const req = await fetch(`${API}/common/searchUser?user=${text}`);
+            const req = await fetch(`${API_URL}/common/searchUser?user=${text}`);
             const result = await req.json();
-            setLoading(false);
             setData(result.data);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     };
     const reFetchExistingFormData = () => {

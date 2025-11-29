@@ -1,3 +1,5 @@
+import { API_URL, PROXY_URL } from "@/config";
+
 export async function GET(req, { params }) {
   return handleProxy(req, params);
 }
@@ -15,11 +17,11 @@ export async function DELETE(req, { params }) {
 }
 
 async function handleProxy(req, params) {
-  const backendBase = "http://192.168.0.100:5000"; // your Node.js server
+  const backendBase = PROXY_URL; // your Node.js server
 
   // extract requested path
   let reqParams = await params;
-  const pathname  = await reqParams.path.join("/");
+  const pathname = await reqParams.path.join("/");
 
   // Extract query params from original URL
   const reqUrl = new URL(req.url);

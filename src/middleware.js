@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import API from "./app/_components/API";
-
+import { API_URL, WEB_URL } from "./config";
 export const middleware = async (request) => {
   let cookie = request.cookies.get("access_token")?.value;
   let path = request.nextUrl.pathname;
@@ -9,13 +8,12 @@ export const middleware = async (request) => {
 
   if (passed) return response;
 
-  if (!passed)
-    return Response.redirect(`${process.env.NEXT_PUBLIC_WEBURL}` + to);
+  if (!passed) return Response.redirect(`${WEB_URL}` + to);
 };
 
 export const config = {
-  matcher: ["/user/:path*"]
-  // matcher: ["/admin/:path*", "/user/:path*", "/staff/:path*"],/
+  // matcher: ["/user/:path*"]
+  matcher: ["/admin/:path*", "/user/:path*", "/staff/:path*"],
 };
 
 async function userValidation(path, cookie) {
@@ -43,7 +41,7 @@ async function userValidation(path, cookie) {
   }
 }
 async function fetchUser(cookie) {
-  return await fetch(API + "/auth/login_with_token", {
+  return await fetch(API_URL + "/auth/login_with_token", {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ token: cookie }),

@@ -1,6 +1,6 @@
 "use client";
 import Alert from "@/app/_components/alert/Alert";
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import fetchWithTimeOut from "@/app/_components/fetchwithtimeout/fetchWithTimeOut";
 import KeyValue from "@/app/_components/KeyValue/KeyValue";
 import { useRouter } from "next/navigation";
@@ -170,7 +170,7 @@ export default TemplateUpdateComponent;
 async function updateTemplate(id, data) {
     try {
         const req = await fetchWithTimeOut(
-            API + "/admin/update-template",
+            API_URL + "/admin/update-template",
             {
                 method: "PUT",
                 headers: {

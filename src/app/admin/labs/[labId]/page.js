@@ -1,15 +1,16 @@
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import BackButton from "@/app/_components/BackButton/BackButton";
 import LabDetail from "@/app/_components/lab/LabDetail";
 import LabForm from "@/app/_components/lab/LabForm";
 import LabTitle from "@/app/_components/lab/LabTitle";
 import NoDataFound from "@/app/_components/noDataFound/NoDataFound";
 import { cookies } from "next/headers";
+import DeleteLab from "./DeleteLab";
 
 const Page = async ({ params }) => {
   try {
     let id = (await params).labId;
-    const req = await fetch(`${API}/common/labs/${id}`, {
+    const req = await fetch(`${API_URL}/common/labs/${id}`, {
       method: "GET",
       headers: { Cookie: (await cookies()).toString() },
       cache: "no-cache",
@@ -33,6 +34,7 @@ const Page = async ({ params }) => {
         <LabTitle data={data} />
         <LabForm preData={{ type: "update", data }} />
         <LabDetail data={data} />
+        <DeleteLab data={data}></DeleteLab>
       </div>
     );
   } catch (error) {

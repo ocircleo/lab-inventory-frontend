@@ -5,7 +5,7 @@ import { TbLockPassword } from "react-icons/tb";
 import { FaRegEye, FaRegEyeSlash, FaRegUser } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import queryParams from "../_components/queryParams/queryParams";
-import API from "../_components/API";
+import { API_URL } from "@/config";
 import Alert from "../_components/alert/Alert";
 import { AuthContext } from "../state/AuthProvider";
 import fetchWithTimeOut from "../_components/fetchwithtimeout/fetchWithTimeOut";
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
 
     try {
       const res = await fetchWithTimeOut(
-        `${API}/auth/register`,
+        `${API_URL}/auth/register`,
         {
           method: "POST",
           credentials: "include",

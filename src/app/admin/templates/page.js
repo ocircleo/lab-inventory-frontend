@@ -1,5 +1,5 @@
 "use client";
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import React, { useEffect, useRef, useState } from "react";
 import TemplateList from "./TemplateList";
 
@@ -22,17 +22,20 @@ const Page = () => {
     try {
       setLoading(true);
 
-      const req = await fetch(`${API}/common/searchTemplate?template=${text}`);
+      const req = await fetch(
+        `${API_URL}/common/searchTemplate?template=${text}`
+      );
       const result = await req.json();
 
-      setLoading(false);
       setData(result.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
-    fetchTemplateData("@all")
+    fetchTemplateData("@all");
   }, []);
   return (
     <div className="p-6">

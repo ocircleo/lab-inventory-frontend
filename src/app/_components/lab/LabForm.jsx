@@ -1,5 +1,5 @@
 "use client";
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import fetchWithTimeOut from '@/app/_components/fetchwithtimeout/fetchWithTimeOut';
 import { useRouter } from 'next/navigation';
 import Alert from '../alert/Alert';
@@ -122,7 +122,7 @@ export default LabForm;
 
 async function addLab(data) {
     try {
-        const req = await fetchWithTimeOut(API + "/admin/create-lab", {
+        const req = await fetchWithTimeOut(API_URL + "/admin/create-lab", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -138,7 +138,7 @@ async function addLab(data) {
 }
 async function updateLab(data, id) {
     try {
-        const req = await fetchWithTimeOut(API + "/admin/update-lab", {
+        const req = await fetchWithTimeOut(API_URL + "/admin/update-lab", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

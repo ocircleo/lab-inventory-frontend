@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import API from '../API';
 import Alert from '../alert/Alert';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '@/config';
 
 const UpdateFrom = ({ type, id }) => {
     const [loading, setLoading] = useState(false)
@@ -15,7 +15,7 @@ const UpdateFrom = ({ type, id }) => {
         }
         setLoading(true)
         try {
-            const req = await fetch(`${API}/common/updateStateLog`, {
+            const req = await fetch(`${API_URL}/common/updateStateLog`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(data),

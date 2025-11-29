@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import LabCompo from './LabCompo';
 import UsersCompo from './UserCompo';
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import Alert from '@/app/_components/alert/Alert';
 import Swal from 'sweetalert2';
 
@@ -29,7 +29,7 @@ const MainCompo = ({ data }) => {
             if (!selectedLab?._id) return Alert("error", "Lab Must be selected");
             if (!user?._id) return Alert("error", "No User selected");
             const requestData = { labId: selectedLab._id, staffId: user._id };
-            const req = await fetch(`${API}/admin/assignStaff`, {
+            const req = await fetch(`${API_URL}/admin/assignStaff`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 credentials: "include",
@@ -48,7 +48,7 @@ const MainCompo = ({ data }) => {
             if (!user?._id) return Alert("error", "No User selected");
 
             const requestData = { staffId: user._id };
-            const req = await fetch(`${API}/admin/makeStaff`, {
+            const req = await fetch(`${API_URL}/admin/makeStaff`, {
                 method: "PUT",
                 headers: { "content-type": "application/json" },
                 credentials: "include",

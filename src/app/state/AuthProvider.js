@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import API from "../_components/API";
+import { API_URL } from "@/config";
 import Alert from "../_components/alert/Alert";
 
 
@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   const fetchUserData = async (cookie) => {
     if (user?.email) return console.log("User already fetched");
     try {
-      const res = await fetch(API + "/auth/login_with_token", {
+      const res = await fetch(API_URL + "/auth/login_with_token", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ token: cookie }),
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   const fetchUserDataAuto = async () => {
     if (user?.email) return console.log("User already fetched");
     try {
-      const res = await fetch(API + "/auth/login_with_cookie", {
+      const res = await fetch(API_URL + "/auth/login_with_cookie", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         credentials: "include",
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
     }
   };
   const logOut = async () => {
-    const req = await fetch(`${API}/auth/logout`, {
+    const req = await fetch(`${API_URL}/auth/logout`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -59,6 +59,7 @@ const AuthProvider = ({ children }) => {
 
   const data = { user, setUser, fetchUserData,fetchUserDataAuto, logOut };
   useEffect(() => {
+    
     console.log("Auth context rendered");
   }, []);
   return <AuthContext.Provider value={data}>{children} </AuthContext.Provider>;

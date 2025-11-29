@@ -1,4 +1,4 @@
-import API from "@/app/_components/API";
+import { API_URL } from "@/config";
 import UserActions from "./UserActions";
 import ErrorPage from "./error";
 
@@ -6,7 +6,7 @@ const Page = async ({ params }) => {
   const userId = params?.userId;
 
   try {
-    const response = await fetch(`${API}/api/users/${userId}`, {
+    const response = await fetch(`${API_URL}/api/users/${userId}`, {
       cache: "no-store", // Disable caching to always get fresh data
     });
 

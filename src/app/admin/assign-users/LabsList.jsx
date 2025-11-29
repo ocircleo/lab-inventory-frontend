@@ -1,10 +1,7 @@
-import API from "@/app/_components/API";
-
-
 const LabList = ({ data, setLab, selectedLab }) => {
     const selectItem = async (ele) => {
         try {
-            // const req = await fetch(`${API}/common/labs/${ele._id}`, {
+            // const req = await fetch(`${API_URL}/common/labs/${ele._id}`, {
             //     method: "GET",
             //     credentials: "include",
             // });

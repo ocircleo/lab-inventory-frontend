@@ -6,11 +6,10 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { AuthContext } from "../state/AuthProvider";
-import API from "../_components/API";
+import { API_URL } from "@/config";
 import Alert from "../_components/alert/Alert";
 import fetchWithTimeOut from "../_components/fetchwithtimeout/fetchWithTimeOut";
 import queryParams from "../_components/queryParams/queryParams";
-
 
 const LoginForm = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -42,7 +41,7 @@ const LoginForm = () => {
 
     try {
       const res = await fetchWithTimeOut(
-        `${API}/auth/login`,
+        `${API_URL}/auth/login`,
         {
           method: "PUT",
           headers: {
@@ -58,6 +57,7 @@ const LoginForm = () => {
         12000
       );
       const data = await res.json();
+      
       loading = false;
       submitButton.disabled = false;
       submitButton.innerText = "Login";

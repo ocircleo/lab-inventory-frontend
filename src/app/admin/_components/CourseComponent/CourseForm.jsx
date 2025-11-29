@@ -1,5 +1,5 @@
 "use client";
-import API from '@/app/_components/API';
+import { API_URL } from "@/config";
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import Alert from '../UserDetaill/detaill';
@@ -199,7 +199,7 @@ const CourseForm = ({ preData }) => {
 export default CourseForm;
 
 async function addCourse(data) {
-    const req = await fetch(API + "/courses/create-course", {
+    const req = await fetch(API_URL + "/courses/create-course", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -211,7 +211,7 @@ async function addCourse(data) {
     return res;
 }
 async function updateCourse(data, id) {
-    const req = await fetch(API + "/courses/update-course", {
+    const req = await fetch(API_URL + "/courses/update-course", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

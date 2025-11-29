@@ -1,8 +1,8 @@
 "use client";
 import Alert from "@/app/_components/alert/Alert";
-import API from "@/app/_components/API";
 import fetchWithTimeOut from "@/app/_components/fetchwithtimeout/fetchWithTimeOut";
 import KeyValue from "@/app/_components/KeyValue/KeyValue";
+import { API_URL } from "@/config";
 import React, { useState, useRef, useEffect } from "react";
 
 const TemplateComponent = () => {
@@ -135,7 +135,7 @@ export default TemplateComponent;
 
 async function addTemplate(data) {
     try {
-        const req = await fetchWithTimeOut(API + "/admin/add-template", {
+        const req = await fetchWithTimeOut(API_URL + "/admin/add-template", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
