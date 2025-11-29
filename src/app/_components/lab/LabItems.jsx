@@ -49,9 +49,12 @@ const LabItems = ({ data }) => {
         <Filter items={items} components={components} clearFilter={clearFilter} filterItems={filterItems} setPrint={setPrint} />
 
         <div className='flex flex-col gap-2 mt-4'>
+            {items.length > 0 ? <p className="py-1 font-semibold">Device List</p> : ""}
             {items?.map((ele, index) => <SingleItem ele={ele} key={ele._id} index={index} selectAndSet={selectAndSet} />)}
         </div>
         <div className='flex flex-col gap-2 mt-4'>
+            {components.length > 0 ? <p className="py-1 font-semibold">Components List</p> : ""}
+
             {components?.map((ele, index) => <SingleItemComponents ele={ele} key={ele._id} index={index} selectAndSet={selectAndSet} />)}
         </div>
 
