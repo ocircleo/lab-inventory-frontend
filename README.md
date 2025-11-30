@@ -57,13 +57,8 @@ A modern Next.js 15 application for managing laboratory inventory with role-base
 |-----------|---------|---------|
 | Next.js   | 15.3.2  | React framework with App Router |
 | React     | 19.0.0  | UI library |
-| TypeScript | Latest  | Type safety (optional) |
 | Tailwind CSS | 4.0  | Styling |
-| DaisyUI   | 5.0.37  | UI components |
-| Redux Toolkit | 2.9.0 | State management |
-| React Redux | 9.2.0 | Redux bindings |
 | React Icons | 5.5.0  | Icon library |
-| Firebase  | 12.6.0  | Backend services |
 | SweetAlert2 | 11.26.3 | Alert dialogs |
 
 ## 📦 Prerequisites
@@ -94,14 +89,7 @@ Create a `.env.local` file in the root directory:
 NEXT_PUBLIC_API_URL=http://192.168.0.100:3000/api-proxy
 NEXT_PUBLIC_WEB_URL=http://localhost:3000
 
-# Firebase Configuration (if using)
-NEXT_PUBLIC_FIREBASE_API_KEY=your_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-```
+
 
 Update `src/config.js` for API and web URLs used throughout the app.
 
